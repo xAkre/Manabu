@@ -1,0 +1,20 @@
+# Manabu
+
+## Description
+
+Manabu is a simple todo app that allows you to add, edit, and delete tasks. It also allows you to mark tasks as
+complete.
+
+## Running the app locally
+
+1. Clone the repository
+2. Download and install [Python](https://www.python.org/downloads/)
+3. Run `pip install -r requirements.txt`
+4. Run `flask --app src/index.py run`
+5. The app should be running on `http://127.0.0.1:5000`
+
+## Technologies Used
+
+- [Python](https://www.python.org/) Backend language
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/) Backend framework
+
