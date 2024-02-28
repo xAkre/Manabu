@@ -16,5 +16,15 @@ complete.
 ## Technologies Used
 
 - [Python](https://www.python.org/) Backend language
-- [Flask](https://flask.palletsprojects.com/en/1.1.x/) Backend framework
+- [Flask](https://flask.palletsprojects.com/en/3.0.x/) Backend framework
+- [SQLAlchemy](https://www.sqlalchemy.org/) Database ORM
+- [Pytest](https://www.pytest.org/) Testing framework
+
+## Currently Working On
+
+- Creating SQLAlchemy database models
+- Scoping database sessions properly. This means that a new database session should be created on every request,
+similar to Flask's session
+- Creating some basic helper functions for common functionality
+- Creating tests
 
