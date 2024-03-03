@@ -9,7 +9,5 @@ app = Flask(__name__)
 def landing_page() -> Any:
     """
     The application's landing page
-
-    :rtype: Any
     """
     return "Hello, world!"
