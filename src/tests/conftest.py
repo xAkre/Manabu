@@ -1,12 +1,9 @@
 import pytest
-from typing import Callable
 from secrets import token_urlsafe
 from uuid import uuid4
 from flask import Flask
-from flask.testing import FlaskClient
 from flask_session import Session as ServerSideSession
 from database import set_database, reset_database
-from routes import Router
 from config import Config
 
 
@@ -69,7 +66,5 @@ def flask_app() -> Flask:
     ServerSideSession(app)
 
     yield app
-
-
 
 
