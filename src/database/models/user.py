@@ -1,4 +1,5 @@
-from ..orm import Mapped, mapped_column
+from typing import List
+from ..orm import Mapped, mapped_column, relationship
 from .base import Base
 
 
@@ -25,3 +26,5 @@ class User(Base):
     """
     The salt used to hash the user's password
     """
+
+    categories: Mapped[List["Category"]] = relationship(back_populates="user") # noqa: Suppress "Unresolved reference 'Category'"
