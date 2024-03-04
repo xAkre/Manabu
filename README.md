@@ -22,5 +22,6 @@ complete.
 
 ## Currently working on 
 
-- Implementing the /login and /register routes
+- Implement the logic for auth routes
+- Implement the frontend for auth routes
 
