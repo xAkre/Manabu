@@ -1,6 +1,7 @@
 from typing import Any
 from werkzeug.local import LocalProxy
 from .orm import Session, Engine, create_engine, sessionmaker, scoped_session
+from .models import Base
 
 
 # These types should be used to annotate parameters and variables of type scoped_session and Engine.
@@ -53,7 +54,7 @@ engine: EngineType = LocalProxy(_get_engine) # noqa: Suppress "Expected type 'En
 
 def set_database(database_path: str, *args: Any, **kwargs: Any) -> None:
     """
-    Set the current global database
+    Set the current global database. Automatically creates all database models
 
     :param database_path: The path to the database
     :param args: Optional arguments to pass to the create engine function
@@ -63,6 +64,8 @@ def set_database(database_path: str, *args: Any, **kwargs: Any) -> None:
 
     _engine = create_engine(database_path, *args, **kwargs)
     _session = scoped_session(sessionmaker(bind=_engine))
+
+    Base.metadata.create_all(_engine)
 
 
 def reset_database() -> None:
