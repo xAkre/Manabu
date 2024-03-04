@@ -1,6 +1,13 @@
 import pytest
+from typing import Callable
+from secrets import token_urlsafe
 from uuid import uuid4
-from database import engine, session, set_database, reset_database
+from flask import Flask
+from flask.testing import FlaskClient
+from flask_session import Session as ServerSideSession
+from database import set_database, reset_database
+from routes import Router
+from config import Config
 
 
 @pytest.fixture(autouse=True)
@@ -39,6 +46,30 @@ def set_temporary_database(temporary_database_path) -> str:
     set_database(database_url)
 
     return temporary_database_path
+
+
+@pytest.fixture
+def flask_app() -> Flask:
+    """
+    Returns a new Flask instance loaded with settings from config.py and basic configuration
+
+    :return: A new flask instance
+    """
+    app = Flask(
+        __name__,
+        template_folder=Config.TEMPLATES_FOLDER,
+        static_folder=Config.STATIC_FOLDER
+    )
+
+    app.config["TESTING"] = True
+    app.config["SESSION_PERMANENT"] = False
+    app.config["SESSION_TYPE"] = "filesystem"
+    app.config["SECRET_KEY"] = token_urlsafe(16)
+
+    ServerSideSession(app)
+
+    yield app
+
 
 
 
