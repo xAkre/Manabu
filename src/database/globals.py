@@ -51,7 +51,7 @@ session: SessionType = LocalProxy(_get_session) # noqa: Suppress: "Expected type
 engine: EngineType = LocalProxy(_get_engine) # noqa: Suppress "Expected type 'Engine', got 'LocalProxy[Engine]' instead"
 
 
-def set_database(database_path: str, *args: Any, **kwargs: any) -> None:
+def set_database(database_path: str, *args: Any, **kwargs: Any) -> None:
     """
     Set the current global database
 
