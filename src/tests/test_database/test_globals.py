@@ -6,7 +6,6 @@ def test_can_set_database(temporary_database_path) -> None:
     """
     Make sure that the global database can be set
 
-
     :param temporary_database_path: The path to the temporary database
     """
     database_url = f"sqlite:///{temporary_database_path}"
@@ -18,14 +17,11 @@ def test_can_set_database(temporary_database_path) -> None:
     assert session.bind == engine
 
 
-def test_can_reset_database(temporary_database_path) -> None:
+@pytest.mark.usefixtures("set_temporary_database")
+def test_can_reset_database() -> None:
     """
     Make sure that the global database can be reset
-
-    :param temporary_database_path: The path to the temporary database
     """
-    database_url = f"sqlite:///{temporary_database_path}"
-    set_database(database_url)
     reset_database()
 
     with pytest.raises(RuntimeError):
@@ -35,15 +31,13 @@ def test_can_reset_database(temporary_database_path) -> None:
         print(session)
 
 
+@pytest.mark.usefixtures("set_temporary_database")
 def test_can_update_database(temporary_database_path) -> None:
     """
     Make sure that the global database can be updated
 
-    :param temporary_database_path: The path to the temporary database
+    :param temporary_database_path: The path to the updated database
     """
-    database_url = f"sqlite:///{temporary_database_path}"
-    set_database(database_url)
-
     updated_database_url = f"sqlite:///{temporary_database_path}-updated"
     set_database(updated_database_url)
 

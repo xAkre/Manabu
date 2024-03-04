@@ -1,6 +1,6 @@
 import pytest
 from uuid import uuid4
-from database import reset_database
+from database import engine, session, set_database, reset_database
 
 
 @pytest.fixture(autouse=True)
@@ -24,3 +24,21 @@ def temporary_database_path(tmp_path) -> str:
     temporary_database_path.touch()
 
     return str(temporary_database_path)
+
+
+@pytest.fixture
+def set_temporary_database(temporary_database_path) -> str:
+    """
+    Set the global database to a temporary database and return the path to it.
+    The database will be automatically deleted after the test has finished
+
+    :param temporary_database_path: The path to the temporary database
+    :return: The path to the temporary database
+    """
+    database_url = f"sqlite:///{temporary_database_path}"
+    set_database(database_url)
+
+    return temporary_database_path
+
+
+
