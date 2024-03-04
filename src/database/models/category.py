@@ -1,3 +1,4 @@
+from typing import List
 from ..orm import Mapped, String, ForeignKey, mapped_column, relationship
 from .base import Base
 
@@ -16,4 +17,5 @@ class Category(Base):
 
     user_uuid: Mapped[str] = mapped_column(ForeignKey("user.uuid"), nullable=False)
     user: Mapped["User"] = relationship(back_populates="categories") # noqa: Suppress "Unresolved reference 'User'"
+    todos: Mapped[List["Todo"]] = relationship(back_populates="category") # noqa: Suppress "Unresolved reference 'Todo'"
 

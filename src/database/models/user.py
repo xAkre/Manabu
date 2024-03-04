@@ -28,3 +28,5 @@ class User(Base):
     """
 
     categories: Mapped[List["Category"]] = relationship(back_populates="user") # noqa: Suppress "Unresolved reference 'Category'"
+    todos: Mapped[List["Todo"]] = relationship(back_populates="user") # noqa: Suppress "Unresolved reference 'Todo'"
+
