@@ -1,6 +1,6 @@
 from typing import Any
 from flask import Blueprint
-import settings
+from config import Config
 
 
 class Router(Blueprint):
@@ -11,7 +11,7 @@ class Router(Blueprint):
     def __init__(self, name: str, import_name: str, url_prefix: str = "", **kwargs: Any) -> None:
         """
         Represents a collection of application routes. Is based on a flask blueprint.
-        This constructor automatically passes static and template folders from settings.py as named parameters
+        This constructor automatically passes static and template folders from config.py as named parameters
         to the blueprint
 
         :param name: The name of the router
@@ -22,8 +22,8 @@ class Router(Blueprint):
         super().__init__(
             name,
             import_name,
-            template_folder=settings.templates_folder,
-            static_folder=settings.static_folder,
+            template_folder=Config.TEMPLATES_FOLDER,
+            static_folder=Config.STATIC_FOLDER,
             **kwargs
         )
         self.url_prefix = url_prefix
