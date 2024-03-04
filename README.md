@@ -13,11 +13,14 @@ complete.
 4. Run `flask --app src/index.py run`
 5. The app should be running on `http://127.0.0.1:5000`
 
-## Technologies Used
+## Technologies used
 
 - [Python](https://www.python.org/) Backend language
 - [Flask](https://flask.palletsprojects.com/en/3.0.x/) Backend framework
 - [SQLAlchemy](https://www.sqlalchemy.org/) Database ORM
 - [Pytest](https://www.pytest.org/) Testing framework
 
+## Currently working on 
+
+- Implementing the /login and /register routes
 
