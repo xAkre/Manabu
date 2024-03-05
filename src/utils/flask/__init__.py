@@ -1,5 +1,5 @@
 """
-This package contains a utility class for flask
+This package contains utilities used with flask
 """
 from flask import request
 
