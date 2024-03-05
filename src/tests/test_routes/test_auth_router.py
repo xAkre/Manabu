@@ -2,7 +2,7 @@ from flask import url_for
 from routes import auth_router
 
 
-def test_url_for_register_page(flask_app):
+def test_url_for_register_page(flask_app) -> None:
     """
     Make sure that url for auth.register returns "/register/"
 
@@ -14,7 +14,7 @@ def test_url_for_register_page(flask_app):
         assert url_for("auth.register") == "/register/"
 
 
-def test_can_get_register_page(flask_app):
+def test_can_get_register_page(flask_app) -> None:
     """
     Make sure that the register page can be fetched
 
