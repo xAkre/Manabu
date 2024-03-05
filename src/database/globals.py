@@ -1,14 +1,14 @@
 from typing import Any
 from werkzeug.local import LocalProxy
-from .orm import Session, Engine, create_engine, sessionmaker, scoped_session
+from .orm import Engine, create_engine, sessionmaker, scoped_session
 from .models import Base
 
 
 # These types should be used to annotate parameters and variables of type scoped_session and Engine.
-# These are simply aliases for the Session and Engine classes from SQLAlchemy, however I put them here
+# These are simply aliases for the scoped_session and Engine classes from SQLAlchemy, however I put them here
 # so that I can import the session and engine as well as their types from the same place
 # instead of having to import the types from database.orm
-type SessionType = Session
+type SessionType = scoped_session
 type EngineType = Engine
 
 
