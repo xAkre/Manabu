@@ -6,4 +6,4 @@ from .register import register
 
 
 auth_router = Router("auth", __name__)
-auth_router.add_url_rule("/register/", "register", register)
+auth_router.add_url_rule("/register/", "register", view_func=register, methods=["GET", "POST"])
