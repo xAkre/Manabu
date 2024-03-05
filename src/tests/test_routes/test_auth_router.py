@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from flask import url_for
 from routes import auth_router
 
@@ -25,4 +26,4 @@ def test_can_get_register_page(flask_app) -> None:
 
     with flask_app.app_context(), flask_app.test_request_context():
         response = test_client.get(url_for("auth.register"))
-        assert response.status_code == 200
+        assert response.status_code == HTTPStatus.OK
