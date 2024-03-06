@@ -1,4 +1,5 @@
 from typing import Callable
+from http import HTTPStatus
 from flask import session, redirect
 
 
@@ -10,7 +11,7 @@ def redirect_if_logged_in[**P, T](f: Callable[P, T]) -> Callable[P, T]:
 
     def wrapper(*args: P.args, **kwargs: P.kwargs):
         if session.get("user"):
-            return redirect("/dashboard")
+            return redirect("/dashboard"), HTTPStatus.FOUND
         return f(*args, **kwargs)
 
     wrapper.__name__ = f.__name__
