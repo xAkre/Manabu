@@ -6,9 +6,11 @@ from database import session
 from database.orm import select
 from database.exc import DatabaseError
 from database.models import User
+from middleware import redirect_if_logged_in
 from utils.security import hash_password
 
 
+@redirect_if_logged_in
 def register() -> Any:
     """
     Handles the /register/ route
