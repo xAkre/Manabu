@@ -1,5 +1,4 @@
 from typing import Callable
-from http import HTTPStatus
 from flask import session, redirect, url_for
 
 
@@ -11,7 +10,7 @@ def require_login[**P, T](f: Callable[P, T]) -> Callable[P, T]:
 
     def wrapper(*args: P.args, **kwargs: P.kwargs):
         if session.get("user") is None:
-            return redirect(url_for("auth.login")), HTTPStatus.UNAUTHORIZED
+            return redirect(url_for("auth.login"))
         return f(*args, **kwargs)
 
     wrapper.__name__ = f.__name__

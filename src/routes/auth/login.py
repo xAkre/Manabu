@@ -54,4 +54,4 @@ def login() -> Any:
     # Log the user in
     f_session.update({"user": user})
     flash("Successfully registered", "success")
-    return redirect("/dashboard"), HTTPStatus.OK
+    return redirect("/dashboard")

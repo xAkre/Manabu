@@ -23,7 +23,9 @@ def register() -> Any:
         username = form_require("username", "Username is required")
         email = form_require("email", "Email is required")
         password = form_require("password", "Password is required")
-        password_confirmation = form_require("password_confirmation", "Password confirmation is required")
+        password_confirmation = form_require(
+            "password_confirmation", "Password confirmation is required"
+        )
     except FieldNotFoundError as e:
         flash(e.message, "error")
         return e.message, HTTPStatus.BAD_REQUEST
@@ -44,15 +46,12 @@ def register() -> Any:
 
     try:
         new_user = User(
-            username=username,
-            email=email,
-            hashed_password=hashed_password,
-            salt=salt
+            username=username, email=email, hashed_password=hashed_password, salt=salt
         )
         session.add(new_user)
         session.commit()
         flash("Successfully registered", "success")
-        return redirect(url_for("auth.login")), HTTPStatus.CREATED
+        return redirect(url_for("auth.login"))
     except DatabaseError:
         flash("There was an error while trying to register", "error")
         abort(HTTPStatus.INTERNAL_SERVER_ERROR)
