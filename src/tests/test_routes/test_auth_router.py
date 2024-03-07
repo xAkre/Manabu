@@ -291,3 +291,48 @@ def test_cannot_log_in_with_a_correct_email_but_incorrect_password(
             },
         )
         assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_url_for_logout_page(flask_app) -> None:
+    """
+    Make sure that url for auth.logout returns "/logout/"
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(auth_router)
+
+    with flask_app.app_context(), flask_app.test_request_context():
+        assert url_for("auth.logout") == "/logout/"
+
+
+@pytest.mark.usefixtures("set_temporary_database")
+def test_can_log_out(flask_app) -> None:
+    """
+    Make sure that the /logout/ route can successfully log a user out
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(auth_router)
+    test_client = flask_app.test_client()
+
+    with flask_app.app_context(), flask_app.test_request_context(), test_client:
+        test_client.post(
+            url_for("auth.register"),
+            data={
+                "username": "username",
+                "email": "email@email.com",
+                "password": "password",
+                "password_confirmation": "password",
+            },
+        )
+        test_client.post(
+            url_for("auth.login"),
+            data={
+                "username_or_email": "email@email.com",
+                "password": "incorrect_password",
+            },
+        )
+        response = test_client.get(url_for("auth.logout"))
+
+        assert response.status_code == HTTPStatus.OK
+        assert f_session.get("user") is None
