@@ -20,8 +20,7 @@ complete.
 - [SQLAlchemy](https://www.sqlalchemy.org/) Database ORM
 - [Pytest](https://www.pytest.org/) Testing framework
 
-## Currently working on 
+## Currently working on
 
-- Implement the logic for auth routes
 - Implement the frontend for auth routes
 
