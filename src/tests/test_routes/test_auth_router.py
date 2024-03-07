@@ -53,7 +53,7 @@ def test_can_register_user(flask_app) -> None:
                 "password_confirmation": "password",
             },
         )
-        assert response.status_code == HTTPStatus.CREATED
+        assert response.status_code == HTTPStatus.FOUND
 
         user = d_session.execute(
             select(User).where(User.email == "email@email.com")
@@ -176,7 +176,7 @@ def test_can_log_in_with_username(flask_app) -> None:
             select(User).where(User.username == "username")
         ).scalar()
 
-        assert response.status_code == HTTPStatus.OK
+        assert response.status_code == HTTPStatus.FOUND
         assert user is not None
         assert f_session.get("user") == user
 
@@ -209,7 +209,7 @@ def test_can_log_in_with_email(flask_app) -> None:
             select(User).where(User.email == "email@email.com")
         ).scalar()
 
-        assert response.status_code == HTTPStatus.OK
+        assert response.status_code == HTTPStatus.FOUND
         assert user is not None
         assert f_session.get("user") == user
 
@@ -334,5 +334,5 @@ def test_can_log_out(flask_app) -> None:
         )
         response = test_client.get(url_for("auth.logout"))
 
-        assert response.status_code == HTTPStatus.OK
+        assert response.status_code == HTTPStatus.FOUND
         assert f_session.get("user") is None
