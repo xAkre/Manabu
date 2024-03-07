@@ -1,12 +1,18 @@
-from typing import List
+from __future__ import annotations
+from typing import List, TYPE_CHECKING
 from ..orm import Mapped, String, ForeignKey, mapped_column, relationship
 from .base import Base
+
+if TYPE_CHECKING:
+    from .user import User
+    from .todo import Todo
 
 
 class Category(Base):
     """
     Represents a category in the database
     """
+
     __tablename__ = "category"
 
     name: Mapped[str] = mapped_column(nullable=False)
@@ -16,6 +22,5 @@ class Category(Base):
     """
 
     user_uuid: Mapped[str] = mapped_column(ForeignKey("user.uuid"), nullable=False)
-    user: Mapped["User"] = relationship(back_populates="categories")  # noqa: Suppress "Unresolved reference 'User'"
-    todos: Mapped[List["Todo"]] = relationship(
-        back_populates="category")  # noqa: Suppress "Unresolved reference 'Todo'"
+    user: Mapped[User] = relationship(back_populates="categories")
+    todos: Mapped[List[Todo]] = relationship(back_populates="category")

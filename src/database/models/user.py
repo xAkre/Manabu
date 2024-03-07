@@ -1,12 +1,19 @@
-from typing import List
+from __future__ import annotations
+from typing import List, TYPE_CHECKING
 from ..orm import Mapped, mapped_column, relationship
 from .base import Base
+
+
+if TYPE_CHECKING:
+    from .category import Category
+    from .todo import Todo
 
 
 class User(Base):
     """
     Represents a user in the database
     """
+
     __tablename__ = "user"
 
     username: Mapped[str] = mapped_column(nullable=False, unique=True)
@@ -27,6 +34,5 @@ class User(Base):
     The salt used to hash the user's password
     """
 
-    categories: Mapped[List["Category"]] = relationship(
-        back_populates="user")  # noqa: Suppress "Unresolved reference 'Category'"
-    todos: Mapped[List["Todo"]] = relationship(back_populates="user")  # noqa: Suppress "Unresolved reference 'Todo'"
+    categories: Mapped[List[Category]] = relationship(back_populates="user")
+    todos: Mapped[List[Todo]] = relationship(back_populates="user")
