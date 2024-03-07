@@ -1,10 +1,12 @@
-from typing import Any
 from http import HTTPStatus
-from flask import request, flash, redirect, url_for, session as f_session
+from typing import Any
+
+from flask import request, flash, redirect, session as f_session
+
 from database import session as d_session
-from database.orm import select, or_
 from database.exc import DatabaseError
 from database.models import User
+from database.orm import select, or_
 from middleware import redirect_if_logged_in
 from utils.flask import FieldNotFoundError, form_require
 from utils.security import check_password

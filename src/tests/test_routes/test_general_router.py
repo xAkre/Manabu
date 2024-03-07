@@ -36,7 +36,6 @@ def test_url_for_dashboard(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(general_router)
-    test_client = flask_app.test_client()
 
     with flask_app.app_context(), flask_app.test_request_context():
         assert url_for("general.dashboard") == "/dashboard/"
