@@ -20,7 +20,9 @@ def login() -> Any:
 
     # Validate user input
     try:
-        username_or_email = form_require("username_or_email", "Username or email is required")
+        username_or_email = form_require(
+            "username_or_email", "Username or email is required"
+        )
         password = form_require("password", "Password is required")
     except FieldNotFoundError as e:
         flash(e.message, "error")
@@ -29,10 +31,16 @@ def login() -> Any:
     # Check if the email or username exists
     try:
         user = d_session.execute(
-            select(User).where(or_(User.email == username_or_email, User.username == username_or_email))).scalar()
-    except DatabaseError as e:
+            select(User).where(
+                or_(User.email == username_or_email, User.username == username_or_email)
+            )
+        ).scalar()
+    except DatabaseError:
         flash("There was an error while trying to login", "error")
-        return "There was an error while trying to login", HTTPStatus.INTERNAL_SERVER_ERROR
+        return (
+            "There was an error while trying to login",
+            HTTPStatus.INTERNAL_SERVER_ERROR,
+        )
 
     if user is None:
         flash("There is no user with that username or email", "error")
@@ -47,4 +55,3 @@ def login() -> Any:
     f_session.update({"user": user})
     flash("Successfully registered", "success")
     return redirect("/dashboard"), HTTPStatus.OK
-

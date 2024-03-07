@@ -27,7 +27,9 @@ def _get_session() -> SessionType:
     if _session is not None:
         return _session
 
-    raise RuntimeError("Attempted to access the database session without a database being set")
+    raise RuntimeError(
+        "Attempted to access the database session without a database being set"
+    )
 
 
 def _get_engine() -> EngineType:
@@ -42,14 +44,14 @@ def _get_engine() -> EngineType:
     if _engine is not None:
         return _engine
 
-    raise RuntimeError("Attempted to access the database engine without a database being set")
+    raise RuntimeError(
+        "Attempted to access the database engine without a database being set"
+    )
 
 
 # Proxies to the private variables, these will be exported from the package
-session: SessionType = LocalProxy(
-    _get_session)  # noqa: Suppress: "Expected type 'Session', got 'LocalProxy[Session]' instead"
-engine: EngineType = LocalProxy(
-    _get_engine)  # noqa: Suppress "Expected type 'Engine', got 'LocalProxy[Engine]' instead"
+session = LocalProxy(_get_session)
+engine = LocalProxy(_get_engine)
 
 
 def set_database(database_path: str, *args: Any, **kwargs: Any) -> None:
