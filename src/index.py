@@ -20,7 +20,8 @@ set_database(Config.DATABASE_URL)
 
 @app.teardown_appcontext
 def shutdown_session(
-        exc=None) -> None:  # noqa: Suppress "Parameter 'exc' value is not used". Flask requires the parameter to be there
+    _,
+) -> None:
     """
     Rollback any uncommitted changes and remove the current session after every request
     """
