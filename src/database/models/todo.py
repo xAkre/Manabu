@@ -16,5 +16,6 @@ class Todo(Base):
     Todos do not have to have a category
     """
 
-    user: Mapped["User"] = relationship(back_populates="todos") # noqa: Suppress "Unresolved reference 'User'"
-    category: Mapped["Category"] = relationship(back_populates="todos") # noqa: Suppress "Unresolved reference 'Category'"
+    user: Mapped["User"] = relationship(back_populates="todos")  # noqa: Suppress "Unresolved reference 'User'"
+    category: Mapped["Category"] = relationship(
+        back_populates="todos")  # noqa: Suppress "Unresolved reference 'Category'"

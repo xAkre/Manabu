@@ -3,14 +3,12 @@ from werkzeug.local import LocalProxy
 from .orm import Engine, create_engine, sessionmaker, scoped_session
 from .models import Base
 
-
 # These types should be used to annotate parameters and variables of type scoped_session and Engine.
 # These are simply aliases for the scoped_session and Engine classes from SQLAlchemy, however I put them here
 # so that I can import the session and engine as well as their types from the same place
 # instead of having to import the types from database.orm
 type SessionType = scoped_session
 type EngineType = Engine
-
 
 # These are private variables that store the current engine and scoped session
 _engine: Engine | None = None
@@ -48,8 +46,10 @@ def _get_engine() -> EngineType:
 
 
 # Proxies to the private variables, these will be exported from the package
-session: SessionType = LocalProxy(_get_session) # noqa: Suppress: "Expected type 'Session', got 'LocalProxy[Session]' instead"
-engine: EngineType = LocalProxy(_get_engine) # noqa: Suppress "Expected type 'Engine', got 'LocalProxy[Engine]' instead"
+session: SessionType = LocalProxy(
+    _get_session)  # noqa: Suppress: "Expected type 'Session', got 'LocalProxy[Session]' instead"
+engine: EngineType = LocalProxy(
+    _get_engine)  # noqa: Suppress "Expected type 'Engine', got 'LocalProxy[Engine]' instead"
 
 
 def set_database(database_path: str, *args: Any, **kwargs: Any) -> None:

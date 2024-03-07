@@ -22,7 +22,7 @@ def test_function_redirects_if_user_is_logged_in(flask_app) -> None:
             """
             raise Exception()
 
-        raise_error_if_called() # noqa: Suppress "Parameter 'P' unfilled"
+        raise_error_if_called()  # noqa: Suppress "Parameter 'P' unfilled"
 
         assert True
 

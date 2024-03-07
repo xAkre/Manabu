@@ -29,4 +29,3 @@ def check_password(password: str, salt: str, hashed_password: str) -> bool:
     password = password.encode("utf-8")
     hash_check = sha256(password + salt.encode("utf-8")).hexdigest()
     return hashed_password == hash_check
-

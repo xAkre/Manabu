@@ -9,7 +9,7 @@ class User(Base):
     """
     __tablename__ = "user"
 
-    username: Mapped[str] = mapped_column(nullable=False)
+    username: Mapped[str] = mapped_column(nullable=False, unique=True)
     profile_picture: Mapped[str] = mapped_column(nullable=True)
     """
     Stores a path to the user's profile picture on the disk. Can be NULL,
@@ -27,6 +27,6 @@ class User(Base):
     The salt used to hash the user's password
     """
 
-    categories: Mapped[List["Category"]] = relationship(back_populates="user") # noqa: Suppress "Unresolved reference 'Category'"
-    todos: Mapped[List["Todo"]] = relationship(back_populates="user") # noqa: Suppress "Unresolved reference 'Todo'"
-
+    categories: Mapped[List["Category"]] = relationship(
+        back_populates="user")  # noqa: Suppress "Unresolved reference 'Category'"
+    todos: Mapped[List["Todo"]] = relationship(back_populates="user")  # noqa: Suppress "Unresolved reference 'Todo'"

@@ -5,7 +5,6 @@ from database import session, set_database
 from routes import general_router, auth_router
 from config import Config
 
-
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -20,7 +19,8 @@ set_database(Config.DATABASE_URL)
 
 
 @app.teardown_appcontext
-def shutdown_session(exc=None) -> None: # noqa: Suppress "Parameter 'exc' value is not used". Flask requires the parameter to be there
+def shutdown_session(
+        exc=None) -> None:  # noqa: Suppress "Parameter 'exc' value is not used". Flask requires the parameter to be there
     """
     Rollback any uncommitted changes and remove the current session after every request
     """

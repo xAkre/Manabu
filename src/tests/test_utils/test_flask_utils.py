@@ -18,4 +18,3 @@ def test_form_require_throws_error_when_field_not_present(flask_app) -> None:
     with flask_app.app_context(), flask_app.test_request_context():
         with pytest.raises(FieldNotFoundError):
             form_require("username")
-

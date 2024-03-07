@@ -16,6 +16,6 @@ class Category(Base):
     """
 
     user_uuid: Mapped[str] = mapped_column(ForeignKey("user.uuid"), nullable=False)
-    user: Mapped["User"] = relationship(back_populates="categories") # noqa: Suppress "Unresolved reference 'User'"
-    todos: Mapped[List["Todo"]] = relationship(back_populates="category") # noqa: Suppress "Unresolved reference 'Todo'"
-
+    user: Mapped["User"] = relationship(back_populates="categories")  # noqa: Suppress "Unresolved reference 'User'"
+    todos: Mapped[List["Todo"]] = relationship(
+        back_populates="category")  # noqa: Suppress "Unresolved reference 'Todo'"

@@ -9,4 +9,3 @@ def test_can_hash_password() -> None:
     password = "password"
     hashed_password, salt = hash_password(password)
     assert check_password(password, salt, hashed_password)
-

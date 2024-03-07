@@ -6,4 +6,3 @@ class Config:
     TEMPLATES_FOLDER = path.abspath("src/templates")
     STATIC_FOLDER = path.abspath("src/static")
     DATABASE_URL = "sqlite:///" + path.abspath("manabu.sqlite")
-

@@ -66,5 +66,3 @@ def flask_app() -> Flask:
     ServerSideSession(app)
 
     yield app
-
-
