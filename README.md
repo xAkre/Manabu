@@ -12,13 +12,16 @@ complete.
 3. Run `pip install -e .`
 4. Run `flask --app src/index.py run`
 5. The app should be running on `http://127.0.0.1:5000`
+   git
 
 ## Technologies used
 
-- [Python](https://www.python.org/) Backend language
-- [Flask](https://flask.palletsprojects.com/en/3.0.x/) Backend framework
-- [SQLAlchemy](https://www.sqlalchemy.org/) Database ORM
-- [Pytest](https://www.pytest.org/) Testing framework
+- [Python](https://www.python.org/) - Backend language
+- [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Backend framework
+- [SQLAlchemy](https://www.sqlalchemy.org/) - Database ORM
+- [Pytest](https://www.pytest.org/) - Testing framework
+- [TailwindCSS](https://tailwindcss.com/) - CSS Framework
+- [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) - Templating engine
 
 ## Currently working on
 

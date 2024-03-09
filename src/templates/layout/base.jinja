@@ -1,0 +1,14 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %} - Manabu</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for("static", filename="styles/build.css") }}"
+        />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
