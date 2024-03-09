@@ -1,0 +1,13 @@
+[build-system]
+requires = ["flit-core >= 3.2.0, < 4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "manabu"
+dependencies = [
+    "flask",
+    "flask-session",
+    "sqlalchemy",
+    "werkzeug",
+    "pytest"
+]

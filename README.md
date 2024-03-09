@@ -9,7 +9,7 @@ complete.
 
 1. Clone the repository
 2. Download and install [Python](https://www.python.org/downloads/)
-3. Run `pip install -r requirements.txt`
+3. Run `pip install -e .`
 4. Run `flask --app src/index.py run`
 5. The app should be running on `http://127.0.0.1:5000`
 

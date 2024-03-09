@@ -8,7 +8,9 @@ class Router(Blueprint):
     This class represents a collection of application routes. It is based on a flask blueprint
     """
 
-    def __init__(self, name: str, import_name: str, url_prefix: str = "", **kwargs: Any) -> None:
+    def __init__(
+        self, name: str, import_name: str, url_prefix: str = "", **kwargs: Any
+    ) -> None:
         """
         Represents a collection of application routes. Is based on a flask blueprint.
         This constructor automatically passes static and template folders from config.py as named parameters
