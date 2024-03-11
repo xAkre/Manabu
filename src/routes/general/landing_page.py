@@ -1,9 +1,9 @@
 from typing import Any
-from http import HTTPStatus
+from flask import render_template
 
 
 def landing_page() -> Any:
     """
     The application's landing page
     """
-    return "Hello, world!", HTTPStatus.OK
+    return render_template("pages/general/landing_page.jinja")

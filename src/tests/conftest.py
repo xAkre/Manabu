@@ -55,7 +55,7 @@ def flask_app() -> Flask:
     app = Flask(
         __name__,
         template_folder=Config.TEMPLATES_FOLDER,
-        static_folder=Config.STATIC_FOLDER
+        static_folder=Config.STATIC_FOLDER,
     )
 
     app.config["TESTING"] = True

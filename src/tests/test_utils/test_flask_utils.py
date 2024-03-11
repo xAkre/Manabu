@@ -6,7 +6,9 @@ def test_form_require_returns_field_when_present(flask_app) -> None:
     """
     Make sure that the form require utility function correctly returns the required field when it is present
     """
-    with flask_app.app_context(), flask_app.test_request_context(data={"username": "username"}):
+    with flask_app.app_context(), flask_app.test_request_context(
+        data={"username": "username"}
+    ):
         assert form_require("username") == "username"
 
 

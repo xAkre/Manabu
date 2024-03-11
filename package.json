@@ -1,0 +1,27 @@
+{
+    "name": "manabu",
+    "version": "1.0.0",
+    "description": "Manabu is a simple todo app that allows you to add, edit, and delete tasks. It also allows you to mark tasks as complete.",
+    "main": "src/index.py",
+    "scripts": {
+        "format-prettier": "npx prettier src/**/*.{js,ts,jsx,tsx,json,prettierrc} --write",
+        "tailwind-build": "npx tailwindcss -i src/static/styles/input.css -o src/static/styles/build.css",
+        "tailwind-watch": "npx tailwindcss --watch -i src/static/styles/input.css -o src/static/styles/build.css"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/xAkre/Manabu.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/xAkre/Manabu/issues"
+    },
+    "homepage": "https://github.com/xAkre/Manabu#readme",
+    "devDependencies": {
+        "prettier": "^3.2.5",
+        "prettier-plugin-jinja-template": "^1.3.3",
+        "prettier-plugin-tailwindcss": "^0.5.12",
+        "tailwindcss": "^3.4.1"
+    }
+}

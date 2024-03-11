@@ -1,8 +1,6 @@
 from http import HTTPStatus
 from typing import Any
-
 from flask import request, flash, redirect, session as f_session
-
 from database import session as d_session
 from database.exc import DatabaseError
 from database.models import User
