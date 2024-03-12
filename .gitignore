@@ -6,3 +6,4 @@ node_modules
 flask_session
 package-lock.json
 manabu.sqlite
+src/static/styles/build.css
