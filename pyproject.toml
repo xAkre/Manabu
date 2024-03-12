@@ -11,3 +11,14 @@ dependencies = [
     "werkzeug",
     "pytest"
 ]
+
+[project.optional-dependencies]
+test = [
+    "pytest"
+]
+
+
+
+
+
+

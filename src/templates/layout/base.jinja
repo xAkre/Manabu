@@ -1,14 +1,26 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>{% block title %}{% endblock %} - Manabu</title>
-        <link
-            rel="stylesheet"
-            href="{{ url_for("static", filename="styles/build.css") }}"
-        />
+        <link rel="stylesheet" href="{{ url_for("static", filename="styles/build.css") }}" />
     </head>
     <body>
+        <div class="popup-container fixed left-1/2 top-4 flex h-fit w-9/12 -translate-x-1/2 flex-col gap-2"></div>
+
         {% block body %}{% endblock %}
+
+        {# Append flashed messages to the popup container #}
+        <script type="module">
+        import { createPopup, appendPopup } from '/static/js/popup.js';
+
+        {% with flashed_messages = get_flashed_messages(with_categories = True) %}
+            const popupContainer = document.querySelector('.popup-container');
+            let popup;
+            {% for category, message in flashed_messages %}
+                popup = createPopup("{{ category }}", "{{ message }}");
+                appendPopup(popup, popupContainer);
+            {% endfor %}
+        {% endwith %}
+        </script>
     </body>
 </html>
