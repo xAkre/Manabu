@@ -5,7 +5,11 @@ from database import session, set_database
 from routes import general_router, auth_router
 from config import Config
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder=Config.STATIC_FOLDER,
+    template_folder=Config.TEMPLATES_FOLDER,
+)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = token_urlsafe(16)
