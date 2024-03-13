@@ -7,6 +7,7 @@ from database.orm import select
 from database.exc import DatabaseError
 from database.models import User
 from middleware import redirect_if_logged_in
+from forms import RegisterForm
 from utils.security import hash_password
 
 
@@ -19,34 +20,33 @@ def register() -> Any:
         return "Register"
 
     # Validate input
-    try:
-        username = form_require("username", "Username is required")
-        email = form_require("email", "Email is required")
-        password = form_require("password", "Password is required")
-        password_confirmation = form_require(
-            "password_confirmation", "Password confirmation is required"
-        )
-    except FieldNotFoundError as e:
-        flash(e.message, "error")
-        return e.message, HTTPStatus.BAD_REQUEST
+    form = RegisterForm(request.form)
 
-    if not password_confirmation == password:
-        flash("Password confirmation does not match password", "error")
-        return "Password confirmation does not match password", HTTPStatus.BAD_REQUEST
+    if not form.validate():
+        print(form.errors)
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(error, "error")
+        return "Invalid input", HTTPStatus.BAD_REQUEST
 
     # Check if user has not already registered before
-    existing_user = session.execute(select(User).where(User.email == email)).scalar()
+    existing_user = session.execute(
+        select(User).where(User.email == form.email.data)
+    ).scalar()
 
     if existing_user is not None:
         flash("This email already exists", "error")
         return "This email already exists", HTTPStatus.BAD_REQUEST
 
     # Add the user to the database
-    hashed_password, salt = hash_password(password)
+    hashed_password, salt = hash_password(form.password.data)
 
     try:
         new_user = User(
-            username=username, email=email, hashed_password=hashed_password, salt=salt
+            username=form.username.data,
+            email=form.email.data,
+            hashed_password=hashed_password,
+            salt=salt,
         )
         session.add(new_user)
         session.commit()

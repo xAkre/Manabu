@@ -1,6 +1,5 @@
 from typing import Any
-from http import HTTPStatus
-from flask import session, flash
+from flask import session, flash, redirect, url_for
 from middleware import require_login
 
 
@@ -11,4 +10,4 @@ def logout() -> Any:
     """
     session.pop("user")
     flash("Successfully logged out", "success")
-    return "Logged out", HTTPStatus.OK
+    return redirect(url_for("general.landing_page"))
