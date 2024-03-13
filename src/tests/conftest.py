@@ -1,6 +1,8 @@
 import pytest
+from typing import Callable
 from secrets import token_urlsafe
 from uuid import uuid4
+from multidict import MultiDict
 from flask import Flask
 from flask_session import Session as ServerSideSession
 from database import set_database, reset_database
@@ -66,3 +68,18 @@ def flask_app() -> Flask:
     ServerSideSession(app)
 
     yield app
+
+
+@pytest.fixture
+def form_data_factory() -> Callable[[dict], MultiDict]:
+    """
+    Returns a factory function for form data dictionaries implemented as a multidict needed for
+    wtforms
+
+    :return: A factory function for form data dictionaries
+    """
+
+    def factory(data: dict) -> MultiDict:
+        return MultiDict(data)
+
+    return factory

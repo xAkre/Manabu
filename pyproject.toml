@@ -9,12 +9,14 @@ dependencies = [
     "flask-session",
     "sqlalchemy",
     "werkzeug",
-    "pytest"
+    "wtforms",
+    "wtforms[email]"
 ]
 
 [project.optional-dependencies]
 test = [
-    "pytest"
+    "pytest",
+    "multidict"
 ]
 
 
