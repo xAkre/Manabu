@@ -15,7 +15,7 @@ def test_url_for_register_page(flask_app) -> None:
     """
     flask_app.register_blueprint(auth_router)
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         assert url_for("auth.register") == "/register/"
 
 
@@ -28,7 +28,7 @@ def test_can_get_register_page(flask_app) -> None:
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         response = test_client.get(url_for("auth.register"))
         assert response.status_code == HTTPStatus.OK
 
@@ -43,7 +43,7 @@ def test_can_register_user(flask_app) -> None:
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         response = test_client.post(
             url_for("auth.register"),
             data={
@@ -52,8 +52,10 @@ def test_can_register_user(flask_app) -> None:
                 "password": "Password_123",
                 "password_confirmation": "Password_123",
             },
+            follow_redirects=True,
         )
-        assert response.status_code == HTTPStatus.FOUND
+        assert response.status_code == HTTPStatus.OK
+        assert response.request.path == url_for("auth.login")
 
         user = d_session.execute(
             select(User).where(User.email == "email@email.com")
@@ -72,7 +74,7 @@ def test_trying_to_register_user_twice_returns_bad_request(flask_app) -> None:
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         test_client.post(
             url_for("auth.register"),
             data={
@@ -108,7 +110,7 @@ def test_trying_to_register_with_invalid_password_confirmation_returns_bad_reque
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         response = test_client.post(
             url_for("auth.register"),
             data={
@@ -130,7 +132,7 @@ def test_url_for_login_page(flask_app) -> None:
     """
     flask_app.register_blueprint(auth_router)
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         assert url_for("auth.login") == "/login/"
 
 
@@ -143,7 +145,7 @@ def test_can_get_login_page(flask_app) -> None:
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         response = test_client.get(url_for("auth.login"))
         assert response.status_code == HTTPStatus.OK
 
@@ -155,10 +157,11 @@ def test_can_log_in_with_username(flask_app) -> None:
 
     :param flask_app: A flask application
     """
+    flask_app.register_blueprint(general_router)
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context(), test_client:
+    with flask_app.test_request_context(), test_client:
         test_client.post(
             url_for("auth.register"),
             data={
@@ -171,12 +174,14 @@ def test_can_log_in_with_username(flask_app) -> None:
         response = test_client.post(
             url_for("auth.login"),
             data={"username_or_email": "username", "password": "Password_123"},
+            follow_redirects=True,
         )
         user = d_session.execute(
             select(User).where(User.username == "username")
         ).scalar()
 
-        assert response.status_code == HTTPStatus.FOUND
+        assert response.status_code == HTTPStatus.OK
+        assert response.request.path == url_for("general.dashboard")
         assert user is not None
         assert f_session.get("user") == user
 
@@ -188,10 +193,11 @@ def test_can_log_in_with_email(flask_app) -> None:
 
     :param flask_app: A flask application
     """
+    flask_app.register_blueprint(general_router)
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context(), test_client:
+    with flask_app.test_request_context(), test_client:
         test_client.post(
             url_for("auth.register"),
             data={
@@ -204,12 +210,14 @@ def test_can_log_in_with_email(flask_app) -> None:
         response = test_client.post(
             url_for("auth.login"),
             data={"username_or_email": "email@email.com", "password": "Password_123"},
+            follow_redirects=True,
         )
         user = d_session.execute(
             select(User).where(User.email == "email@email.com")
         ).scalar()
 
-        assert response.status_code == HTTPStatus.FOUND
+        assert response.status_code == HTTPStatus.OK
+        assert response.request.path == url_for("general.dashboard")
         assert user is not None
         assert f_session.get("user") == user
 
@@ -224,7 +232,7 @@ def test_cannot_log_in_with_a_username_or_email_that_does_not_exist(flask_app) -
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context(), test_client:
+    with flask_app.test_request_context():
         response = test_client.post(
             url_for("auth.login"),
             data={"username_or_email": "does_not_exist", "password": "Password_123"},
@@ -244,7 +252,7 @@ def test_cannot_log_in_with_a_correct_username_but_incorrect_password(
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context(), test_client:
+    with flask_app.test_request_context():
         test_client.post(
             url_for("auth.register"),
             data={
@@ -273,7 +281,7 @@ def test_cannot_log_in_with_a_correct_email_but_incorrect_password(
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context(), test_client:
+    with flask_app.test_request_context():
         test_client.post(
             url_for("auth.register"),
             data={
@@ -301,7 +309,7 @@ def test_url_for_logout_page(flask_app) -> None:
     """
     flask_app.register_blueprint(auth_router)
 
-    with flask_app.app_context(), flask_app.test_request_context():
+    with flask_app.test_request_context():
         assert url_for("auth.logout") == "/logout/"
 
 
@@ -316,7 +324,7 @@ def test_can_log_out(flask_app) -> None:
     flask_app.register_blueprint(auth_router)
     test_client = flask_app.test_client()
 
-    with flask_app.app_context(), flask_app.test_request_context(), test_client:
+    with flask_app.test_request_context(), test_client:
         test_client.post(
             url_for("auth.register"),
             data={
@@ -333,7 +341,8 @@ def test_can_log_out(flask_app) -> None:
                 "password": "Password_123",
             },
         )
-        response = test_client.get(url_for("auth.logout"))
+        response = test_client.get(url_for("auth.logout"), follow_redirects=True)
 
-        assert response.status_code == HTTPStatus.FOUND
+        assert response.status_code == HTTPStatus.OK
+        assert response.request.path == url_for("general.landing_page")
         assert f_session.get("user") is None

@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from typing import Any
-from flask import request, flash, redirect, session as f_session
+from flask import request, flash, redirect, session as f_session, url_for
 from database import session as d_session
 from database.exc import DatabaseError
 from database.models import User
@@ -54,4 +54,4 @@ def login() -> Any:
     # Log the user in
     f_session.update({"user": user})
     flash("Successfully registered", "success")
-    return redirect("/dashboard")
+    return redirect(url_for("general.dashboard"))
