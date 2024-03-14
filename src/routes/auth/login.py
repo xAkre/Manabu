@@ -6,7 +6,7 @@ from database.exc import DatabaseError
 from database.models import User
 from database.orm import select, or_
 from middleware import redirect_if_logged_in
-from utils.flask import FieldNotFoundError, form_require
+from forms import LoginForm
 from utils.security import check_password
 
 
@@ -19,20 +19,22 @@ def login() -> Any:
         return "Login"
 
     # Validate user input
-    try:
-        username_or_email = form_require(
-            "username_or_email", "Username or email is required"
-        )
-        password = form_require("password", "Password is required")
-    except FieldNotFoundError as e:
-        flash(e.message, "error")
-        return e.message, HTTPStatus.BAD_REQUEST
+    form = LoginForm(request.form)
+
+    if not form.validate():
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(error, "error")
+        return "Invalid input", HTTPStatus.BAD_REQUEST
 
     # Check if the email or username exists
     try:
         user = d_session.execute(
             select(User).where(
-                or_(User.email == username_or_email, User.username == username_or_email)
+                or_(
+                    User.email == form.username_or_email.data,
+                    User.username == form.username_or_email.data,
+                )
             )
         ).scalar()
     except DatabaseError:
@@ -47,7 +49,7 @@ def login() -> Any:
         return "There is no user with that username or email", HTTPStatus.BAD_REQUEST
 
     # Check if the password matches
-    if not check_password(password, user.salt, user.hashed_password):
+    if not check_password(form.password.data, user.salt, user.hashed_password):
         flash("Incorrect password", "error")
         return "Incorrect password", HTTPStatus.BAD_REQUEST
 

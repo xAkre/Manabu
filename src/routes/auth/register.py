@@ -23,7 +23,6 @@ def register() -> Any:
     form = RegisterForm(request.form)
 
     if not form.validate():
-        print(form.errors)
         for field, errors in form.errors.items():
             for error in errors:
                 flash(error, "error")
