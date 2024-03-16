@@ -51,6 +51,7 @@ class RegisterForm(Form):
     )
     password_confirmation = PasswordField(
         label="Password Confirmation",
+        name="password_confirmation",
         validators=[
             validators.input_required(message="Password confirmation is required"),
             validators.equal_to(

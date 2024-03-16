@@ -122,7 +122,24 @@ class XCircle extends Icon {
         '</svg>\n';
 }
 
-export { Identification, Lock, Tick, XMark, XCircle };
+/**
+ * Represents an email icon
+ */
+class Email extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"\n' +
+        '    />\n' +
+        '</svg>\n';
+}
 
-
-
+export { Identification, Lock, Tick, XMark, XCircle, Email };

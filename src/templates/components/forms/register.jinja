@@ -1,0 +1,42 @@
+{% from "components/icons.jinja" import identification, email, lock %}
+
+
+{% macro register_form(form) %}
+    <div class="w-full max-w-2xl">
+        <form action="{{ url_for("auth.register") }}" method="post">
+            <div class="flex flex-col w-full gap-12">
+                <div class="flex flex-col gap-6 w-full">
+                    {{ _form_field(form.username, identification, "Username") }}
+                    {{ _form_field(form.email, email, "Email") }}
+                    {{ _form_field(form.password, lock, "Password") }}
+                    {{ _form_field(form.password_confirmation, lock, "Password Confirmation") }}
+                </div>
+                <button type="submit" class="w-full rounded-lg bg-gradient-to-r from-indigo-800 to-indigo-500 py-2 text-2xl font-extralight text-slate-100 transition-all duration-300 ease-in-out">Register</button>
+                <div class="w-full text-center">
+                    <a
+                        href="{{ url_for("auth.login") }}"
+                        class="text-lg font-thin text-slate-500 underline dark:text-slate-400"
+                    >
+                        Already have an account? Login
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endmacro %}
+
+{% macro _form_field(field, icon, placeholder) %}
+    <div class="flex flex-col gap-1 w-full">
+        {{ field.label(class="text-slate-500 dark:text-slate-400 text-2xl font-extralight") }}
+        <div class="flex py-2 px-3 gap-4 items-center border-b border-b-slate-400 dark:border-b-slate-500">
+            {{ icon(class="text-slate-600 dark:text-slate-300 h-10 font-extralight") }}
+            {{
+                field(
+                    class="outline-none bg-transparent w-full h-full text-slate-600 dark:text-slate-300 text-2xl",
+                    value=request.form[field.name],
+                    placeholder=placeholder
+                )
+            }}
+        </div>
+    </div>
+{% endmacro %}

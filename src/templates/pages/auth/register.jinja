@@ -1,0 +1,20 @@
+{% extends "layout/base.jinja" %}
+{% from "components/forms/register.jinja" import register_form %}
+{% from "components/icons.jinja" import logo_long_with_text %}
+
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <img
+        alt="Background"
+        src="{{ url_for("static", filename="backgrounds/waves.svg") }}"
+        class="w-screen h-screen fixed top-0 left-0 object-cover"
+    >
+    <div class="w-screen h-screen fixed top-0 left-0 items-center flex justify-center">
+        <div class="w-screen-3/4 max-w-4xl p-24 bg-slate-100 dark:bg-slate-800 rounded-lg drop-shadow flex flex-col items-center gap-6">
+            {{ logo_long_with_text(text="REGISTER", text_class="text-4xl text-slate-700 dark:text-slate-200", logo_class="text-slate-800 dark:text-slate-100 h-28") }}
+            {{ register_form(form=form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,7 +1,6 @@
 from typing import Any
 from http import HTTPStatus
-from flask import request, redirect, abort, flash, url_for
-from utils.flask import FieldNotFoundError, form_require
+from flask import request, redirect, abort, flash, url_for, render_template
 from database import session
 from database.orm import select
 from database.exc import DatabaseError
@@ -17,7 +16,7 @@ def register() -> Any:
     Handles the /register/ route
     """
     if request.method == "GET":
-        return "Register"
+        return render_template("pages/auth/register.jinja", form=RegisterForm())
 
     # Validate input
     form = RegisterForm(request.form)
@@ -26,7 +25,10 @@ def register() -> Any:
         for field, errors in form.errors.items():
             for error in errors:
                 flash(error, "error")
-        return "Invalid input", HTTPStatus.BAD_REQUEST
+        return (
+            render_template("pages/auth/register.jinja", form=form),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Check if user has not already registered before
     existing_user = session.execute(
@@ -35,7 +37,10 @@ def register() -> Any:
 
     if existing_user is not None:
         flash("This email already exists", "error")
-        return "This email already exists", HTTPStatus.BAD_REQUEST
+        return (
+            render_template("pages/auth/register.jinja", form=form),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Add the user to the database
     hashed_password, salt = hash_password(form.password.data)
@@ -49,6 +54,7 @@ def register() -> Any:
         )
         session.add(new_user)
         session.commit()
+
         flash("Successfully registered", "success")
         return redirect(url_for("auth.login"))
     except DatabaseError:
