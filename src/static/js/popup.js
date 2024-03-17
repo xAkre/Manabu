@@ -13,7 +13,7 @@ const createPopup = (type, message) => {
     const popupUuid = uuidv4();
     const container = document.createElement('div');
     container.className =
-        'flex w-full items-center gap-2 rounded-md border-l-2 bg-slate-50 p-2 transition-all duration-1000 ease-in-out dark:bg-slate-900 shadow-md';
+        'flex w-full items-center gap-2 rounded-md border-l-2 bg-slate-50 p-2 transition-all duration-1000 ease-in-out dark:bg-slate-900 shadow-md md:p-3 md:gap-3.5';
     container.dataset['id'] = popupUuid;
 
     /*
@@ -30,8 +30,8 @@ const createPopup = (type, message) => {
     /* Set the icon */
     let { svgElement } =
         type === 'success'
-            ? new Tick('h-7 aspect-square shrink-0')
-            : new XCircle('h-7 aspect-square shrink-0');
+            ? new Tick('h-7 aspect-square shrink-0 md:h-10')
+            : new XCircle('h-7 aspect-square shrink-0 md:h-10');
     if (type === 'success') {
         svgElement.classList.add('text-green-500', 'dark:text-green-900');
     } else {
@@ -47,12 +47,14 @@ const createPopup = (type, message) => {
     /* Set the title */
     const errorTitle = document.createElement('div');
     errorTitle.textContent = type === 'success' ? 'Success' : 'Error';
-    errorTitle.className = 'text-xs text-slate-900 dark:text-slate-100';
+    errorTitle.className =
+        'text-xs text-slate-900 dark:text-slate-100 md:text-lg';
     content.appendChild(errorTitle);
 
     /* Set the popup content */
     const errorText = document.createElement('div');
-    errorText.className = 'text-2xs text-slate-500 dark:text-slate-400';
+    errorText.className =
+        'text-2xs text-slate-500 dark:text-slate-400 md:text-sm';
     errorText.textContent = message;
     content.appendChild(errorText);
 
