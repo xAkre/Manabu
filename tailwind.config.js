@@ -19,6 +19,9 @@ export default {
                 lvh: ['100vh', '100lvh'],
             },
             width: {
+                'screen-9/10': '90vw',
+                'screen-4/5': '80vw',
+                'screen-3/5': '60vw',
                 'screen-3/4': '75vw',
                 'screen-1/2': '50vw',
                 'screen-1/4': '25vw',
