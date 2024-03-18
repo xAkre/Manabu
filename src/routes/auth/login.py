@@ -1,6 +1,13 @@
 from http import HTTPStatus
 from typing import Any
-from flask import request, flash, redirect, session as f_session, url_for
+from flask import (
+    request,
+    flash,
+    render_template,
+    redirect,
+    session as f_session,
+    url_for,
+)
 from database import session as d_session
 from database.exc import DatabaseError
 from database.models import User
@@ -16,7 +23,7 @@ def login() -> Any:
     Handles the /login/ route
     """
     if request.method == "GET":
-        return "Login"
+        return render_template("pages/auth/login.jinja", form=LoginForm())
 
     # Validate user input
     form = LoginForm(request.form)
@@ -25,7 +32,10 @@ def login() -> Any:
         for field, errors in form.errors.items():
             for error in errors:
                 flash(error, "error")
-        return "Invalid input", HTTPStatus.BAD_REQUEST
+        return (
+            render_template("pages/auth/login.jinja", form=form),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Check if the email or username exists
     try:
@@ -40,20 +50,26 @@ def login() -> Any:
     except DatabaseError:
         flash("There was an error while trying to login", "error")
         return (
-            "There was an error while trying to login",
+            render_template("pages/auth/login.jinja", form=form),
             HTTPStatus.INTERNAL_SERVER_ERROR,
         )
 
     if user is None:
         flash("There is no user with that username or email", "error")
-        return "There is no user with that username or email", HTTPStatus.BAD_REQUEST
+        return (
+            render_template("pages/auth/login.jinja", form=form),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Check if the password matches
     if not check_password(form.password.data, user.salt, user.hashed_password):
         flash("Incorrect password", "error")
-        return "Incorrect password", HTTPStatus.BAD_REQUEST
+        return (
+            render_template("pages/auth/login.jinja", form=form),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Log the user in
     f_session.update({"user": user})
-    flash("Successfully registered", "success")
+    flash("Successfully logged in", "success")
     return redirect(url_for("general.dashboard"))

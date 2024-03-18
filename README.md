@@ -25,7 +25,3 @@ complete.
 - [TailwindCSS](https://tailwindcss.com/) - CSS Framework
 - [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) - Templating engine
 
-## Currently working on
-
-- Implement the frontend for auth routes
-

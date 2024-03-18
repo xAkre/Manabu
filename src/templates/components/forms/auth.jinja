@@ -25,6 +25,28 @@
     </div>
 {% endmacro %}
 
+{% macro login_form(form) %}
+    <div class="w-full max-w-screen-sm">
+        <form action="{{ url_for("auth.login") }}" method="post">
+            <div class="flex flex-col w-full gap-5 md:gap-8">
+                <div class="flex flex-col gap-3 w-full md:gap-5">
+                    {{ _form_field(form.username_or_email, identification, "Username Or Email") }}
+                    {{ _form_field(form.password, lock, "Password") }}
+                </div>
+                <button type="submit" class="w-full rounded-lg bg-gradient-to-r from-indigo-800 to-indigo-500 py-1.5 text-sm font-extralight text-slate-100 transition-all duration-300 ease-in-out md:text-lg md:py-2">Register</button>
+                <div class="w-full text-center">
+                    <a
+                        href="{{ url_for("auth.register") }}"
+                        class="text-2xs font-thin text-slate-500 underline dark:text-slate-400 md:text-sm"
+                    >
+                        Don't have an account? Register
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endmacro %}
+
 {% macro _form_field(field, icon, placeholder) %}
     <div class="flex flex-col w-full md:gap-1">
         {{ field.label(class="text-slate-500 dark:text-slate-400 text-sm font-extralight md:text-lg") }}
