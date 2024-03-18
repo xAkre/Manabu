@@ -25,3 +25,8 @@ complete.
 - [TailwindCSS](https://tailwindcss.com/) - CSS Framework
 - [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) - Templating engine
 
+## Currently Working On
+
+- Implementing logic for creating, updating and deleting todo categories
+- Implementing frontend for managing categories
+
