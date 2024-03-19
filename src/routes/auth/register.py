@@ -6,7 +6,7 @@ from database.orm import select
 from database.exc import DatabaseError
 from database.models import User
 from middleware import redirect_if_logged_in
-from forms import RegisterForm
+from forms.auth import RegisterForm
 from utils.security import hash_password
 
 

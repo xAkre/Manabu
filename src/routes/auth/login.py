@@ -13,7 +13,7 @@ from database.exc import DatabaseError
 from database.models import User
 from database.orm import select, or_
 from middleware import redirect_if_logged_in
-from forms import LoginForm
+from forms.auth import LoginForm
 from utils.security import check_password
 
 

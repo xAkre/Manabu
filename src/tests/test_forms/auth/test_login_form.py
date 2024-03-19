@@ -1,4 +1,4 @@
-from forms import LoginForm
+from forms.auth import LoginForm
 
 
 def test_validates_proper_input(form_data_factory) -> None:
