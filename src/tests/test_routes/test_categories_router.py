@@ -82,6 +82,35 @@ def test_cant_add_category_with_invalid_color(flask_app, form_data_factory) -> N
         assert len(user.categories) == 0
 
 
+def test_url_for_show_categories(flask_app) -> None:
+    """
+    Make sure that url for categories.show returns "/categories/"
+    """
+    flask_app.register_blueprint(categories_router)
+
+    with flask_app.test_request_context():
+        assert url_for("categories.show") == "/categories/"
+
+
+@pytest.mark.usefixtures("set_temporary_database")
+def test_can_show_categories(flask_app, form_data_factory) -> None:
+    """
+    Make sure that the show categories route can successfully show the users categories
+
+    :param flask_app: A flask application
+    :param form_data_factory: A factory for form data dictionaries
+    """
+    flask_app.register_blueprint(categories_router)
+    test_client = flask_app.test_client()
+
+    with flask_app.test_request_context():
+        _register_and_login_test_user(flask_app, test_client, form_data_factory)
+        form_data = form_data_factory({"name": "work", "color": "#FFFFFF"})
+        test_client.post(url_for("categories.create"), data=form_data)
+        response = test_client.get(url_for("categories.show"))
+        assert response.status_code == HTTPStatus.OK
+
+
 def _register_and_login_test_user(
     flask_app: Flask, test_client: FlaskClient, form_data_factory
 ) -> None:
