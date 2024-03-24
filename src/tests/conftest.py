@@ -68,18 +68,3 @@ def flask_app() -> Flask:
     ServerSideSession(app)
 
     yield app
-
-
-@pytest.fixture
-def form_data_factory() -> Callable[[dict], MultiDict]:
-    """
-    Returns a factory function for form data dictionaries implemented as a multidict needed for
-    wtforms
-
-    :return: A factory function for form data dictionaries
-    """
-
-    def factory(data: dict) -> MultiDict:
-        return MultiDict(data)
-
-    return factory

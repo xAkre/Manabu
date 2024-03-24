@@ -1,15 +1,12 @@
 from forms.auth import LoginForm
+from tests.utils import form_data
 
 
-def test_validates_proper_input(form_data_factory) -> None:
+def test_validates_proper_input() -> None:
     """
     Make sure that the form allows proper input
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
-        {"username_or_email": "username", "password": "Password_123"}
-    )
-    form = LoginForm(formdata=form_data)
+    data = form_data({"username_or_email": "username", "password": "Password_123"})
+    form = LoginForm(formdata=data)
 
     assert form.validate()

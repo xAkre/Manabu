@@ -1,13 +1,12 @@
 from forms.auth import RegisterForm
+from tests.utils import form_data
 
 
-def test_validates_proper_input(form_data_factory) -> None:
+def test_validates_proper_input() -> None:
     """
     Make sure that the form allows proper input
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email@email.com",
@@ -15,18 +14,16 @@ def test_validates_proper_input(form_data_factory) -> None:
             "password_confirmation": "Password_123",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert form.validate()
 
 
-def test_does_not_validate_too_short_username(form_data_factory) -> None:
+def test_does_not_validate_too_short_username() -> None:
     """
     Make sure that the form does not allow a username shorter than 4 characters
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "abc",
             "email": "email@email.com",
@@ -34,18 +31,16 @@ def test_does_not_validate_too_short_username(form_data_factory) -> None:
             "password_confirmation": "Password_123",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_too_long_username(form_data_factory) -> None:
+def test_does_not_validate_too_long_username() -> None:
     """
     Make sure that the form does not allow a username longer than 64 characters
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "a" * 65,
             "email": "email@email.com",
@@ -53,18 +48,16 @@ def test_does_not_validate_too_long_username(form_data_factory) -> None:
             "password_confirmation": "Password_123",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_invalid_email(form_data_factory) -> None:
+def test_does_not_validate_invalid_email() -> None:
     """
     Make sure that the form does not allow an invalid email
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -72,20 +65,16 @@ def test_does_not_validate_invalid_email(form_data_factory) -> None:
             "password_confirmation": "Password_123",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_too_short_password(
-    form_data_factory,
-) -> None:
+def test_does_not_validate_too_short_password() -> None:
     """
     Make sure that the form does not allow a password with less than 8 characters
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -93,20 +82,16 @@ def test_does_not_validate_too_short_password(
             "password_confirmation": "passwor",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_too_long_password(
-    form_data_factory,
-) -> None:
+def test_does_not_validate_too_long_password() -> None:
     """
     Make sure that the form does not allow a password with more than 64 characters
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -114,20 +99,16 @@ def test_does_not_validate_too_long_password(
             "password_confirmation": "p" * 65,
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_password_with_no_lowercase_character(
-    form_data_factory,
-) -> None:
+def test_does_not_validate_password_with_no_lowercase_character() -> None:
     """
     Make sure that the form does not allow a password without a lowercase letter
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -135,20 +116,16 @@ def test_does_not_validate_password_with_no_lowercase_character(
             "password_confirmation": "PASSWORD_123",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_password_with_no_uppercase_character(
-    form_data_factory,
-) -> None:
+def test_does_not_validate_password_with_no_uppercase_character() -> None:
     """
     Make sure that the form does not allow a password without an uppercase letter
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -156,20 +133,16 @@ def test_does_not_validate_password_with_no_uppercase_character(
             "password_confirmation": "password_123",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_password_without_digit(
-    form_data_factory,
-) -> None:
+def test_does_not_validate_password_without_digit() -> None:
     """
     Make sure that the form does not allow a password without a digit
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -177,20 +150,16 @@ def test_does_not_validate_password_without_digit(
             "password_confirmation": "password_",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_password_with_no_special_character(
-    form_data_factory,
-) -> None:
+def test_does_not_validate_password_with_no_special_character() -> None:
     """
     Make sure that the form does not allow a password without a special character
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -198,20 +167,16 @@ def test_does_not_validate_password_with_no_special_character(
             "password_confirmation": "password123",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
 
 
-def test_does_not_validate_password_confirmation_that_doesnt_match_password(
-    form_data_factory,
-) -> None:
+def test_does_not_validate_password_confirmation_that_doesnt_match_password() -> None:
     """
     Make sure that the form does not allow a password confirmation different from the password
-
-    :param form_data_factory: A factory for form data dictionaries
     """
-    form_data = form_data_factory(
+    data = form_data(
         {
             "username": "username",
             "email": "email.email.com",
@@ -219,6 +184,6 @@ def test_does_not_validate_password_confirmation_that_doesnt_match_password(
             "password_confirmation": "Password_1234",
         }
     )
-    form = RegisterForm(formdata=form_data)
+    form = RegisterForm(formdata=data)
 
     assert not form.validate()
