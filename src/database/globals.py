@@ -50,8 +50,10 @@ def _get_engine() -> EngineType:
 
 
 # Proxies to the private variables, these will be exported from the package
-session = LocalProxy(_get_session)
-engine = LocalProxy(_get_engine)
+# noinspection PyTypeChecker
+session: SessionType = LocalProxy(_get_session)
+# noinspection PyTypeChecker
+engine: Engine = LocalProxy(_get_engine)
 
 
 def set_database(database_path: str, *args: Any, **kwargs: Any) -> None:
