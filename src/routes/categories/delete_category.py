@@ -10,7 +10,7 @@ from middleware import require_login
 @require_login
 def delete_category(category_uuid: str) -> Any:
     """
-    Handle deleting categories
+    Handle deleting categories. This route should be used as an api route as it does not return a page
 
     :param category_uuid: The uuid of the category to delete
     """
