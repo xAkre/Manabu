@@ -10,8 +10,8 @@ export default {
                 megrim: "'megrim', sans-serif",
             },
             fontSize: {
-                '2xs': ['10px', '13px'],
-                '3xs': ['8px', '10px'],
+                '2xs': ['0.7rem', '1rem'],
+                '3xs': ['0.6rem', '1rem'],
             },
             height: {
                 dvh: ['100vh', '100dvh'],
