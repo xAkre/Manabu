@@ -27,6 +27,5 @@ complete.
 
 ## Currently Working On
 
-- Implementing logic for creating, updating and deleting todo categories
 - Implementing frontend for managing categories
 
