@@ -1,8 +1,9 @@
 import pytest
+from uuid import uuid4
 from http import HTTPStatus
 from flask import url_for
 from database import session as d_session
-from database.orm import select, and_
+from database.orm import select
 from database.models import User, Category
 from routes import categories_router
 from tests.utils import form_data, register_and_login
@@ -148,3 +149,56 @@ def test_can_delete_category(flask_app) -> None:
             url_for("categories.delete", category_uuid=category.uuid)
         )
         assert response.status_code == HTTPStatus.OK
+
+
+def test_url_for_edit_category_page(flask_app) -> None:
+    """
+    Make sure that url for categories.edit returns "/categories/<category_uuid>/"
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(categories_router)
+    category_uuid = uuid4()
+
+    with flask_app.test_request_context():
+        assert (
+            url_for("categories.edit", category_uuid=category_uuid)
+            == f"/categories/{category_uuid}/"
+        )
+
+
+@pytest.mark.usefixtures("set_temporary_database")
+def test_can_edit_category(flask_app) -> None:
+    """
+    Make sure that categories can be successfully edited
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(categories_router)
+    test_client = flask_app.test_client()
+
+    with flask_app.test_request_context():
+        register_and_login(test_client, flask_app=flask_app)
+        category_data = form_data({"name": "work", "color": "#FFFFFF"})
+        test_client.post(url_for("categories.create"), data=category_data)
+
+        category = d_session.execute(
+            select(Category).where(
+                Category.name == category_data.get("name"),
+            )
+        ).scalar()
+
+        edited_category_data = form_data({"name": "school", "color": "#000000"})
+        test_client.post(
+            url_for("categories.edit", category_uuid=category.uuid),
+            data=edited_category_data,
+        )
+
+        category = d_session.execute(
+            select(Category).where(
+                Category.name == edited_category_data.get("name"),
+            )
+        ).scalar()
+
+        assert category.name == edited_category_data.get("name")
+        assert category.color == edited_category_data.get("color")
