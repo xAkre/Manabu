@@ -1,13 +1,13 @@
 {% set default_class = "h-10 w-10 text-slate-800 dark:text-slate-100" %}
 
-{% macro identification(class=default_class) %}
+{% macro identification(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -17,14 +17,14 @@
     </svg>
 {% endmacro %}
 
-{% macro lock(class=default_class) %}
+{% macro lock(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -34,22 +34,22 @@
     </svg>
 {% endmacro %}
 
-{% macro tick(class=default_class) %}
+{% macro tick(class=default_class, class_identifier = "") %}
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-         class="{{ class }}">
+         class="{{ class + " " + class_identifier }}">
         <path stroke-linecap="round" stroke-linejoin="round"
               d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
     </svg>
 {% endmacro %}
 
-{% macro x_mark(class=default_class) %}
+{% macro x_mark(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -59,7 +59,7 @@
     </svg>
 {% endmacro %}
 
-{% macro x_circle(class=default_class) %}
+{% macro x_circle(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -76,14 +76,14 @@
     </svg>
 {% endmacro %}
 
-{% macro email(class=default_class) %}
+{% macro email(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -98,7 +98,7 @@
         viewBox="0 0 95 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             d="M83.2004 7.8728V16.0685C83.2004 18.8757 83.6431 20.854 84.5286 22.0033C85.433 23.1337 86.667 23.6989 88.2308 23.6989C89.7946 23.6989 91.0192 23.1337 91.9047 22.0033C92.8091 20.854 93.2613 18.8757 93.2613 16.0685V7.8728H94.1091V16.0685C94.1091 21.7207 92.1497 24.5467 88.2308 24.5467C84.312 24.5467 82.3525 21.7207 82.3525 16.0685V7.8728H83.2004Z"
@@ -142,14 +142,14 @@
 {% endmacro %}
 
 
-{% macro hamburger(class=default_class) %}
+{% macro hamburger(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -159,14 +159,14 @@
     </svg>
 {% endmacro %}
 
-{% macro moon(class=default_class) %}
+{% macro moon(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -176,14 +176,14 @@
     </svg>
 {% endmacro %}
 
-{% macro user(class=default_class) %}
+{% macro user(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -193,14 +193,14 @@
     </svg>
 {% endmacro %}
 
-{% macro log_in(class=default_class) %}
+{% macro log_in(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -211,14 +211,14 @@
 {% endmacro %}
 
 
-{% macro log_out(class=default_class) %}
+{% macro log_out(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
@@ -228,14 +228,14 @@
     </svg>
 {% endmacro %}
 
-{% macro register(class=default_class) %}
+{% macro register(class=default_class, class_identifier = "") %}
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="{{ class }}"
+        class="{{ class + " " + class_identifier }}"
     >
         <path
             stroke-linecap="round"
