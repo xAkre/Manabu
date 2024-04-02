@@ -142,4 +142,137 @@ class Email extends Icon {
         '</svg>\n';
 }
 
-export { Identification, Lock, Tick, XMark, XCircle, Email };
+/**
+ * Represents a hamburger icon
+ */
+class Hamburger extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M3.75 9h16.5m-16.5 6.75h16.5"\n' +
+        '    />\n' +
+        '</svg>\n';
+}
+
+/**
+ * Represents a moon icon
+ */
+class Moon extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"\n' +
+        '    />\n' +
+        '</svg>';
+}
+
+/**
+ * Represents a user icon
+ */
+class User extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"\n' +
+        '    />\n' +
+        '</svg>\n';
+}
+
+/**
+ * Represents a log-in icon
+ */
+class LogIn extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"\n' +
+        '    />\n' +
+        '</svg>';
+}
+
+/**
+ * Represents a log-out icon
+ */
+class LogOut extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"\n' +
+        '    />\n' +
+        '</svg>\n';
+}
+
+/**
+ * Represents a register icon
+ */
+class Register extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"\n' +
+        '    />\n' +
+        '</svg>\n';
+}
+
+export {
+    Identification,
+    Lock,
+    Tick,
+    XMark,
+    XCircle,
+    Email,
+    Hamburger,
+    Moon,
+    User,
+    LogIn,
+    LogOut,
+    Register,
+};
