@@ -1,5 +1,4 @@
 from typing import Any
-from http import HTTPStatus
 from flask import request, session as f_session, flash, url_for, redirect
 from database import session as d_session
 from database.models import Category
