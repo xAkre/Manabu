@@ -1,4 +1,4 @@
-{% set default_class = "h-10 w-10 text-slate-800 dark:text-slate-100" %}
+{% set default_class = "h-6 text-slate-800 dark:text-slate-100 stroke-1 md:stroke-[1.25]" %}
 
 {% macro identification(class=default_class, class_identifier = "") %}
     <svg
@@ -66,7 +66,7 @@
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class={{ class }}
+        class={{ class + " " + class_identifier }}
     >
         <path
             stroke-linecap="round"
@@ -93,12 +93,12 @@
     </svg>
 {% endmacro %}
 
-{% macro logo_long(class="h-20 text-slate-800 dark:text-slate-100") %}
+{% macro logo_long(class="h-10 text-slate-800 dark:text-slate-100") %}
     <svg
         viewBox="0 0 95 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        class="{{ class + " " + class_identifier }}"
+        class="{{ class }}"
     >
         <path
             d="M83.2004 7.8728V16.0685C83.2004 18.8757 83.6431 20.854 84.5286 22.0033C85.433 23.1337 86.667 23.6989 88.2308 23.6989C89.7946 23.6989 91.0192 23.1337 91.9047 22.0033C92.8091 20.854 93.2613 18.8757 93.2613 16.0685V7.8728H94.1091V16.0685C94.1091 21.7207 92.1497 24.5467 88.2308 24.5467C84.312 24.5467 82.3525 21.7207 82.3525 16.0685V7.8728H83.2004Z"
@@ -140,7 +140,6 @@
         </p>
     </div>
 {% endmacro %}
-
 
 {% macro hamburger(class=default_class, class_identifier = "") %}
     <svg

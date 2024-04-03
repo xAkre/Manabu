@@ -1,3 +1,5 @@
+{% from "components/nav.jinja" import nav %}
+
 <!DOCTYPE html>
 <html lang="en" class="md:text-xl">
     <head>
@@ -6,6 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        {# To include the nav inside of a page simply set with_nav to True #}
+        {% if with_nav %}
+            {{ nav() }}
+        {% endif %}
+
         <div class="popup-container fixed left-1/2 top-4 flex h-fit w-9/12 -translate-x-1/2 flex-col gap-2 z-30"></div>
 
         {% block body %}{% endblock %}
