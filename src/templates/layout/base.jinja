@@ -17,6 +17,13 @@
 
         {% block body %}{% endblock %}
 
+        {# Initialize the site theme #}
+        <script type="module">
+            import { initTheme } from '/static/js/theme.js';
+
+            initTheme();
+        </script>
+
         {# Append flashed messages to the popup container #}
         <script type="module">
             import { createPopup, appendPopup } from '/static/js/popup.js';
