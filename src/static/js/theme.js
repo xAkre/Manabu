@@ -1,5 +1,7 @@
 /**
  * Load the user's preferred theme
+ *
+ * @returns void
  */
 const initTheme = () => {
     let prefersDarkScheme = localStorage.getItem('prefers-dark-scheme');
@@ -17,6 +19,8 @@ const initTheme = () => {
 
 /**
  * Set the current theme
+ *
+ * @returns void
  */
 const setTheme = (theme) => {
     if (theme === 'light') {
@@ -30,6 +34,8 @@ const setTheme = (theme) => {
 
 /**
  * Switch the current theme
+ *
+ * @returns void
  */
 const switchTheme = () => {
     const prefersDarkScheme = localStorage.getItem('prefers-dark-scheme');
