@@ -8,6 +8,8 @@ const initTheme = () => {
 
     if (prefersDarkScheme === 'true') {
         return document.documentElement.classList.add('dark');
+    } else if (prefersDarkScheme === 'false') {
+        return document.documentElement.classList.remove('dark');
     }
 
     prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
