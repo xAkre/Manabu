@@ -16,8 +16,7 @@
                 {% endif %}
             </div>
             <div class="flex items-center gap-1">
-                {# TODO: Implement switching themes using this button #}
-                <div class="theme-button">
+                <div class="switch-theme-button">
                     {{ moon() }}
                 </div>
                 {# TODO: Implement user options using this button #}
@@ -27,4 +26,5 @@
             </div>
         </div>
     </nav>
+    <script src="/static/js/nav.js" type="module"></script>
 {% endmacro %}

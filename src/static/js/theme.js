@@ -35,9 +35,9 @@ const switchTheme = () => {
     const prefersDarkScheme = localStorage.getItem('prefers-dark-scheme');
 
     if (prefersDarkScheme === 'true') {
-        return setTheme('dark');
-    } else if (prefersDarkScheme === 'false') {
         return setTheme('light');
+    } else if (prefersDarkScheme === 'false') {
+        return setTheme('dark');
     }
 
     setTheme('light');
