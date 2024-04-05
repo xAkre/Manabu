@@ -1,0 +1,47 @@
+{% from "components/icons.jinja" import logo_long_with_text, logo_short, x_mark, home, tag, briefcase, plus, squares_plus, cog, log_out  %}
+
+
+{% macro sidebar() %}
+    <div class="sidebar fixed top-0 left-0 h-svh w-0 max-w-screen-sm bg-slate-800 dark:bg-slate-900 overflow-hidden">
+        <div class="w-full h-full p-3">
+            <div class="flex flex-col h-full w-full justify-between">
+                <div class="flex flex-col gap-4">
+                    <div class="flex justify-between items-center">
+                        {{ logo_long_with_text(text="navigation", logo_class="text-slate-200 h-9 stroke-[0.25]", text_class="text-slate-300 text-sm") }}
+                        {{ x_mark(class="h-9 text-slate-300 stroke-1 transition duration-300 cursor-pointer hover:rotate-180", class_identifier="close-sidebar-button") }}
+                    </div>
+                    <div class="flex flex-col items-center">
+                        {{ _sidebar_menu_element(home, "", "Dashboard") }}
+                        {{ _sidebar_menu_element(tag, "", "Categories") }}
+                        {{ _sidebar_menu_element(briefcase, "", "Todos") }}
+                        <span class="w-[90%] h-[1px] bg-slate-600 my-2"></span>
+                        {{ _sidebar_menu_element(plus, "", "Add Category") }}
+                        {{ _sidebar_menu_element(squares_plus, "", "Add Todo") }}
+                    </div>
+                </div>
+                <div class="flex flex-col w-full gap-1 pb-2">
+                    {{ _sidebar_menu_element(cog, "", "Profile Options") }}
+                    <div class="w-full p-3 rounded-md bg-slate-700 dark:bg-slate-800 flex gap-2">
+                        {{ logo_short(class="size-7 text-slate-200") }}
+                        <div class="flex h-full w-full justify-between items-center">
+                            <div class="flex flex-col justify-center gap-0.5">
+                                <p class="text-slate-300 text-sm leading-none">Username</p>
+                                <p class="text-slate-400 text-2xs leading-none font-extralight">email@email.com</p>
+                            </div>
+                            <a href="{{ url_for("auth.logout") }}">
+                                {{ log_out(class="text-slate-300 h-6 stroke-1 cursor-pointer") }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro _sidebar_menu_element(icon, href, text) %}
+    <a class="w-full flex items-center gap-2 p-2.5 rounded-md hover:bg-slate-700 dark:hover:bg-slate-800 cursor-pointer">
+        {{ icon(class="text-slate-300 h-6 stroke-1") }}
+        <p class="text-slate-300 font-extralight leading-none">{{ text }}</p>
+    </a>
+{% endmacro %}

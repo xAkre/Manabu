@@ -1,4 +1,6 @@
 {% from "components/nav.jinja" import nav %}
+{% from "components/sidebar.jinja" import sidebar %}
+
 
 <!DOCTYPE html>
 <html lang="en" class="md:text-xl">
@@ -8,6 +10,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        {# To include the sidebar inside of a page simply set with_sidebar to True #}
+        {% if with_sidebar %}
+            {{ sidebar() }}
+        {% endif %}
+
         {# To include the nav inside of a page simply set with_nav to True #}
         {% if with_nav %}
             {{ nav() }}
