@@ -37,6 +37,12 @@
             </div>
         </div>
     </div>
+    <script type="module">
+        import { closeSidebar } from '/static/js/sidebar.js';
+
+        const closeSidebarButton = document.querySelector('.close-sidebar-button');
+        closeSidebarButton.addEventListener('click', closeSidebar);
+    </script>
 {% endmacro %}
 
 {% macro _sidebar_menu_element(icon, href, text) %}
