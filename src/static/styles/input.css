@@ -6,4 +6,7 @@
 
 * {
     font-family: 'Comfortaa', 'sans-serif';
+    /* This makes switching themes look nice */
+    transition: background-color, color;
+    transition-duration: 300ms;
 }
