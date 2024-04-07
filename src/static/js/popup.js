@@ -22,20 +22,20 @@ const createPopup = (type, message) => {
         is why I do it like this
     */
     if (type === 'success') {
-        container.classList.add('border-green-500', 'dark:border-green-900');
+        container.classList.add('border-green-500', 'dark:border-green-400');
     } else {
-        container.classList.add('border-red-500', 'dark:border-red-900');
+        container.classList.add('border-red-500', 'dark:border-red-400');
     }
 
     /* Set the icon */
     let { svgElement } =
         type === 'success'
-            ? new Tick('h-6 aspect-square shrink-0 md:h-7')
-            : new XCircle('h-6 aspect-square shrink-0 md:h-7');
+            ? new Tick('h-6 aspect-square shrink-0 md:h-8')
+            : new XCircle('h-6 aspect-square shrink-0 md:h-8');
     if (type === 'success') {
-        svgElement.classList.add('text-green-500', 'dark:text-green-900');
+        svgElement.classList.add('text-green-500', 'dark:text-green-400');
     } else {
-        svgElement.classList.add('text-red-500', 'dark:text-red-900');
+        svgElement.classList.add('text-red-500', 'dark:text-red-400');
     }
 
     container.appendChild(svgElement);
@@ -47,13 +47,14 @@ const createPopup = (type, message) => {
     /* Set the title */
     const errorTitle = document.createElement('div');
     errorTitle.textContent = type === 'success' ? 'Success' : 'Error';
-    errorTitle.className = 'text-xs text-slate-900 dark:text-slate-100';
+    errorTitle.className =
+        'text-xs text-slate-900 dark:text-slate-100 md:text-sm';
     content.appendChild(errorTitle);
 
     /* Set the popup content */
     const errorText = document.createElement('div');
     errorText.className =
-        'text-2xs text-slate-500 dark:text-slate-400 leading-none';
+        'text-2xs text-slate-500 dark:text-slate-400 leading-none md:text-xs';
     errorText.textContent = message;
     content.appendChild(errorText);
 
