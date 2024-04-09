@@ -1,4 +1,4 @@
-{% from "components/icons.jinja" import logo_long, logo_long_with_text, hamburger, moon, user %}
+{% from "components/icons.jinja" import logo_long, logo_long_with_text, hamburger, moon, user as user_icon, log_out, log_in, register, cog %}
 
 
 {% macro nav(logo_text) %}
@@ -17,15 +17,33 @@
                 {% endif %}
             </div>
             <div class="flex items-center gap-1">
-                <div class="switch-theme-button">
+                <div class="switch-theme-button cursor-pointer">
                     {{ moon() }}
                 </div>
-                {# TODO: Implement user options using this button #}
-                <div class="user-button">
-                    {{ user() }}
+                <div class="nav-user-options relative">
+                    <div class="nav-user-button cursor-pointer">
+                        {{ user_icon() }}
+                    </div>
+                    <div class="hidden user-button-context-menu flex-col gap-0.5 absolute -right-2 top-[240%] p-2 bg-slate-50 dark:bg-slate-900 rounded-md drop-shadow">
+                        <span class="w-0 h-0 border-transparent border-b-slate-50 dark:border-b-slate-900 border-[10px] absolute bottom-full right-2.5"></span>
+                        {% if user %}
+                            {{ _user_context_menu_item(cog, "", "Profile Options") }}
+                            {{ _user_context_menu_item(log_out, url_for("auth.logout"), "Logout") }}
+                        {% else %}
+                            {{ _user_context_menu_item(log_in, url_for("auth.login"), "Login") }}
+                            {{ _user_context_menu_item(register, url_for("auth.register"), "Register") }}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
     <script src="/static/js/nav.js" type="module"></script>
+{% endmacro %}
+
+{% macro _user_context_menu_item(icon, href, text) %}
+    <a href="{{ href }}" class="{{ class_identifier }} flex items-center gap-2 p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer min-w-28">
+        {{ icon(class="text-slate-700 dark:text-slate-300 h-5 stroke-1") }}
+        <p class="text-slate-700 dark:text-slate-300 font-extralight leading-none whitespace-nowrap text-sm">{{ text }}</p>
+    </a>
 {% endmacro %}
