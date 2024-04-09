@@ -149,7 +149,7 @@
     </svg>
 {% endmacro %}
 
-{% macro logo_long_with_text(text, logo_class, text_class = "text-2xl text-slate-700 dark:text-slate-200") %}
+{% macro logo_long_with_text(text, logo_class, text_class = "text-sm text-slate-700 dark:text-slate-200") %}
     <div class="flex items-end flex-col w-fit">
         {% if logo_class %}
             {{ logo_long(class=logo_class) }}
