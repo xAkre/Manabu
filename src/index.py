@@ -2,7 +2,7 @@ from secrets import token_urlsafe
 from flask import Flask
 from flask_session import Session as ServerSideSession
 from database import session, set_database
-from routes import general_router, auth_router
+from routes import general_router, auth_router, categories_router
 from config import Config
 
 app = Flask(
@@ -18,6 +18,7 @@ ServerSideSession(app)
 
 app.register_blueprint(general_router)
 app.register_blueprint(auth_router)
+app.register_blueprint(categories_router)
 
 set_database(Config.DATABASE_URL)
 
