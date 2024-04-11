@@ -1,5 +1,6 @@
 from typing import Callable
-from flask import session, redirect, url_for
+from flask import session as f_session, redirect, url_for
+from database import session as d_session
 
 
 def require_login[**P, T](f: Callable[P, T]) -> Callable[P, T]:
@@ -9,8 +10,9 @@ def require_login[**P, T](f: Callable[P, T]) -> Callable[P, T]:
     """
 
     def wrapper(*args: P.args, **kwargs: P.kwargs):
-        if session.get("user") is None:
+        if f_session.get("user") is None:
             return redirect(url_for("auth.login"))
+        d_session.add(f_session.get("user"))
         return f(*args, **kwargs)
 
     wrapper.__name__ = f.__name__
