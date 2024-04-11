@@ -31,8 +31,6 @@ def edit_category(category_uuid: str) -> Any:
         return redirect(url_for("categories.show"))
 
     # Check if the category belongs to the current user
-    d_session.add(f_session.get("user"))
-
     if not category.user == f_session.get("user"):
         flash("You do not have access to that category", "error")
         return redirect(url_for("categories.show"))

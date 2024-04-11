@@ -14,8 +14,6 @@ def delete_category(category_uuid: str) -> Any:
 
     :param category_uuid: The uuid of the category to delete
     """
-    d_session.add(f_session.get("user"))
-
     # Check if category exists
     category = d_session.get(Category, category_uuid)
     if category is None:
