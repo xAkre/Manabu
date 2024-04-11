@@ -24,10 +24,10 @@
                     {{ _sidebar_menu_element(cog, "", "Profile Options") }}
                     <div class="w-full p-3 rounded-md bg-slate-700 dark:bg-slate-800 flex gap-2">
                         {{ logo_short(class="size-7 text-slate-200") }}
-                        <div class="flex h-full w-full justify-between items-center">
-                            <div class="flex flex-col justify-center gap-0.5">
-                                <p class="text-slate-300 text-sm leading-none">Username</p>
-                                <p class="text-slate-400 text-2xs leading-none font-extralight">email@email.com</p>
+                        <div class="flex h-full w-full justify-between items-center overflow-hidden">
+                            <div class="flex flex-col justify-center gap-0.5 overflow-hidden">
+                                <p class="text-slate-300 text-sm leading-none overflow-hidden overflow-ellipsis">{{ user.username }}</p>
+                                <p class="text-slate-400 text-2xs leading-none font-extralight overflow-hidden overflow-ellipsis">{{ user.email }}</p>
                             </div>
                             <a href="{{ url_for("auth.logout") }}">
                                 {{ log_out(class="text-slate-300 h-6 stroke-1 cursor-pointer") }}
