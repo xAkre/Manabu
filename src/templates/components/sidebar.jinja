@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex flex-col items-center">
                         {{ _sidebar_menu_element(home, "", "Dashboard") }}
-                        {{ _sidebar_menu_element(tag, "", "Categories") }}
+                        {{ _sidebar_menu_element(tag, url_for("categories.show"), "Categories") }}
                         {{ _sidebar_menu_element(briefcase, "", "Todos") }}
                         <span class="w-[90%] h-[1px] bg-slate-600 my-2"></span>
                         {{ _sidebar_menu_element(plus, "", "Add Category") }}
@@ -47,7 +47,7 @@
 {% endmacro %}
 
 {% macro _sidebar_menu_element(icon, href, text) %}
-    <a class="w-full flex items-center gap-2 p-2.5 rounded-md hover:bg-slate-700 dark:hover:bg-slate-800 cursor-pointer">
+    <a href="{{ href }}" class="w-full flex items-center gap-2 p-2.5 rounded-md hover:bg-slate-700 dark:hover:bg-slate-800 cursor-pointer">
         {{ icon(class="text-slate-300 h-6 stroke-1") }}
         <p class="text-slate-300 font-extralight leading-none">{{ text }}</p>
     </a>
