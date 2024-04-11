@@ -59,4 +59,7 @@ def register() -> Any:
         return redirect(url_for("auth.login"))
     except DatabaseError:
         flash("There was an error while trying to register", "error")
-        abort(HTTPStatus.INTERNAL_SERVER_ERROR)
+        return (
+            render_template("pages/auth/register.jinja", form=form),
+            HTTPStatus.INTERNAL_SERVER_ERROR,
+        )
