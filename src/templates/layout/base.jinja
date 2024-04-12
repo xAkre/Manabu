@@ -9,7 +9,9 @@
         <link rel="stylesheet" href="{{ url_for("static", filename="styles/build.css") }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
+    <body class="flex min-h-dvh flex-col">
+        <div class="popup-container fixed left-1/2 top-4 flex h-fit w-9/12 -translate-x-1/2 flex-col gap-2 z-30"></div>
+
         {# To include the sidebar inside of a page simply set with_sidebar to True #}
         {% if with_sidebar %}
             {{ sidebar() }}
@@ -20,9 +22,9 @@
             {{ nav(logo_text=logo_text) }}
         {% endif %}
 
-        <div class="popup-container fixed left-1/2 top-4 flex h-fit w-9/12 -translate-x-1/2 flex-col gap-2 z-30"></div>
-
-        {% block body %}{% endblock %}
+        <div class="w-full grow bg-slate-100 dark:bg-slate-800">
+            {% block body %}{% endblock %}
+        </div>
 
         {# Initialize the site theme #}
         <script type="module">
