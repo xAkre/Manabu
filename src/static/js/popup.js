@@ -13,7 +13,7 @@ const createPopup = (type, message) => {
     const popupUuid = uuidv4();
     const container = document.createElement('div');
     container.className =
-        'flex w-full items-center gap-2 rounded-md border-l-2 bg-slate-50 p-2 transition-all duration-1000 ease-in-out dark:bg-slate-900 shadow-md md:p-3';
+        'flex w-full items-center gap-2 rounded-md border-l-2 bg-slate-50 p-3 transition-all duration-1000 ease-in-out dark:bg-slate-900 shadow-md';
     container.dataset['id'] = popupUuid;
 
     /*
@@ -30,8 +30,8 @@ const createPopup = (type, message) => {
     /* Set the icon */
     let { svgElement } =
         type === 'success'
-            ? new Tick('h-6 aspect-square shrink-0 md:h-8')
-            : new XCircle('h-6 aspect-square shrink-0 md:h-8');
+            ? new Tick('h-7 aspect-square shrink-0')
+            : new XCircle('h-7 aspect-square shrink-0');
     if (type === 'success') {
         svgElement.classList.add('text-green-500', 'dark:text-green-400');
     } else {
@@ -42,19 +42,19 @@ const createPopup = (type, message) => {
 
     /* Create the content container */
     const content = document.createElement('div');
-    content.className = 'flex flex-col gap-0.5';
+    content.className = 'flex flex-col gap-1';
 
     /* Set the title */
     const errorTitle = document.createElement('div');
     errorTitle.textContent = type === 'success' ? 'Success' : 'Error';
     errorTitle.className =
-        'text-xs text-slate-900 dark:text-slate-100 md:text-sm';
+        'text-sm text-slate-900 dark:text-slate-100 leading-none';
     content.appendChild(errorTitle);
 
     /* Set the popup content */
     const errorText = document.createElement('div');
     errorText.className =
-        'text-2xs text-slate-500 dark:text-slate-400 leading-none md:text-xs';
+        'text-2xs text-slate-500 dark:text-slate-400 leading-none';
     errorText.textContent = message;
     content.appendChild(errorText);
 
@@ -67,9 +67,12 @@ const createPopup = (type, message) => {
  * Append a popup to a container. The popup will be automatically removed after 5 seconds
  *
  * @param {HTMLDivElement} popup - The popup to be appended
- * @param {HTMLElement} container - The container to be appended to
+ * @param {HTMLElement} container - The container to be appended to. Defaults to document.querySelector('.popup-container')
  */
-const appendPopup = (popup, container) => {
+const appendPopup = (
+    popup,
+    container = document.querySelector('.popup-container'),
+) => {
     container.appendChild(popup);
 
     setTimeout(() => {
