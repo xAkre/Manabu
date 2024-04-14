@@ -1,0 +1,37 @@
+{% extends "layout/base.jinja" %}
+{% from "components/icons.jinja" import pencil, trash %}
+
+
+{% set with_nav = True %}
+{% set with_sidebar = True %}
+{% set logo_text = "categories" %}
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+    <div class="w-full flex flex-col px-7 py-4 gap-6">
+        <p class="text-2xl text-slate-800 dark:text-slate-200 font-extralight">Your Categories</p>
+        {% if user.categories|length < 1 %}
+            <p class="text-lg test-slate-700 dark:text-slate-300 font-extralight">You do not have any categories</p>
+        {% else %}
+            <div class="flex flex-col gap-2">
+                {% for category in user.categories %}
+                    {{ _category_element(category) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% macro _category_element(category) %}
+    <div style="background: {{ category.color + "30" }}; border-bottom-color: {{ category.color + "50" }}" class="drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b">
+        <p class="text-slate-800 dark:text-slate-200 leading-none">{{ category.name }} </p>
+        <div class="flex gap-1">
+            <a href="{{ url_for("categories.edit", category_uuid=category.uuid) }}" class="edit-category-button" data-category-uuid="{{ category.uuid }}">
+                {{ pencil() }}
+            </a>
+            <div class="delete-category-button cursor-pointer" data-category-uuid="{{ category.uuid }}">
+                {{ trash() }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
