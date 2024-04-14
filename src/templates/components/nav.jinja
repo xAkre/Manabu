@@ -24,7 +24,7 @@
                     <div class="nav-user-button cursor-pointer">
                         {{ user_icon() }}
                     </div>
-                    <div class="hidden user-button-context-menu flex-col gap-0.5 absolute -right-2 top-[240%] p-2 bg-slate-50 dark:bg-slate-900 rounded-md drop-shadow">
+                    <div class="hidden user-button-context-menu z-10 flex-col gap-0.5 absolute -right-2 top-[240%] p-2 bg-slate-50 dark:bg-slate-900 rounded-md drop-shadow">
                         <span class="w-0 h-0 border-transparent border-b-slate-50 dark:border-b-slate-900 border-[10px] absolute bottom-full right-2.5"></span>
                         {% if user %}
                             {{ _user_context_menu_item(cog, "", "Profile Options") }}
