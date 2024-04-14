@@ -9,7 +9,7 @@ complete.
 
 1. Clone the repository
 2. Download and install [Python](https://www.python.org/downloads/)
-3. Run `pip install -e .`
+3. Run `pip install .`
 4. Download and install [Node.js](https://nodejs.org/en)
 5. Run `npm install`
 6. Run `npm run tailwind-build`
