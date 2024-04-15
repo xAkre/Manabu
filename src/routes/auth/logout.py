@@ -9,5 +9,6 @@ def logout() -> Any:
     Logs the user out upon accessing the /logout/ route
     """
     session.pop("user")
+    session.pop("user_uuid")
     flash("Successfully logged out", "success")
     return redirect(url_for("general.landing_page"))

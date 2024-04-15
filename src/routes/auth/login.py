@@ -70,6 +70,6 @@ def login() -> Any:
         )
 
     # Log the user in
-    f_session.update({"user": user})
+    f_session.update({"user_uuid": user.uuid})
     flash("Successfully logged in", "success")
     return redirect(url_for("general.dashboard"))

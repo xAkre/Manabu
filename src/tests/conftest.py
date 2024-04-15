@@ -1,11 +1,10 @@
 import pytest
-from typing import Callable
 from secrets import token_urlsafe
 from uuid import uuid4
-from multidict import MultiDict
-from flask import Flask
+from flask import Flask, session as f_session
 from flask_session import Session as ServerSideSession
-from database import set_database, reset_database
+from database import set_database, reset_database, session as d_session
+from database.models import User
 from config import Config
 
 
@@ -64,6 +63,19 @@ def flask_app() -> Flask:
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"
     app.config["SECRET_KEY"] = token_urlsafe(16)
+
+    @app.before_request
+    def set_user() -> None:
+        """
+        Add the current user to flask session on creating a request
+        """
+        if f_session.get("user"):
+            f_session.pop("user")
+
+        user_uuid = f_session.get("user_uuid")
+        if user_uuid:
+            user = d_session.get(User, user_uuid)
+            f_session.update({"user": user})
 
     ServerSideSession(app)
 

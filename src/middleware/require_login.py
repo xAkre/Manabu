@@ -16,9 +16,7 @@ def require_login[**P, T](f: Callable[P, T]) -> Callable[P, T]:
         if user is None:
             return redirect(url_for("auth.login"))
 
-        user = d_session.get(User, f_session.get("user").uuid)
         d_session.add(user)
-        f_session.update({"user": user})
         return f(*args, **kwargs)
 
     wrapper.__name__ = f.__name__

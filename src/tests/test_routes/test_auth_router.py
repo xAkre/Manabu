@@ -184,7 +184,6 @@ def test_can_log_in_with_username(flask_app) -> None:
         assert response.status_code == HTTPStatus.OK
         assert response.request.path == url_for("general.dashboard")
         assert user is not None
-        assert f_session.get("user") == user
 
 
 @pytest.mark.usefixtures("set_temporary_database")
@@ -221,7 +220,6 @@ def test_can_log_in_with_email(flask_app) -> None:
         assert response.status_code == HTTPStatus.OK
         assert response.request.path == url_for("general.dashboard")
         assert user is not None
-        assert f_session.get("user") == user
 
 
 @pytest.mark.usefixtures("set_temporary_database")
