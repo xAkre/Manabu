@@ -1,6 +1,7 @@
 from typing import Callable
 from flask import session as f_session, redirect, url_for
 from database import session as d_session
+from database.models import User
 
 
 def require_login[**P, T](f: Callable[P, T]) -> Callable[P, T]:
@@ -15,7 +16,8 @@ def require_login[**P, T](f: Callable[P, T]) -> Callable[P, T]:
         if user is None:
             return redirect(url_for("auth.login"))
 
-        user = d_session.merge(user)
+        user = d_session.get(User, f_session.get("user").uuid)
+        d_session.add(user)
         f_session.update({"user": user})
         return f(*args, **kwargs)
 

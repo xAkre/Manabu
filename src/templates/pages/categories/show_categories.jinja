@@ -1,5 +1,5 @@
 {% extends "layout/base.jinja" %}
-{% from "components/icons.jinja" import pencil, trash %}
+{% from "components/icons.jinja" import pencil, trash, plus %}
 
 
 {% set with_nav = True %}
@@ -8,10 +8,13 @@
 {% block title %}Categories{% endblock %}
 
 {% block body %}
-    <div class="lg:pl-12 lg:pt-7 w-full flex flex-col px-7 py-4 gap-6">
-        <p class="text-2xl text-slate-800 dark:text-slate-200 font-extralight">Your Categories</p>
+    <div class="lg:pl-12 lg:pt-7 w-full max-w-screen-sm flex flex-col px-7 py-4 gap-6">
+        <div class="flex justify-between items-center w-full">
+            <p class="text-2xl text-slate-800 dark:text-slate-200 font-extralight">Your Categories</p>
+            <a href="{{ url_for("categories.create") }}" class="">{{ plus(class="size-8 text-slate-800 dark:text-slate-200 stroke-1") }}</a>
+        </div>
         {% if user.categories|length < 1 %}
-            <p class="text-lg test-slate-700 dark:text-slate-300 font-extralight">You do not have any categories</p>
+            <p class="text-lg test-slate-700 dark:text-slate-300 font-extralight">You do not have any categories. <a href="{{ url_for("categories.create") }}" class="underline">Add one now</a> </p>
         {% else %}
             <div class="flex flex-col gap-2">
                 {% for category in user.categories %}
@@ -40,14 +43,14 @@
 {% endblock %}
 
 {% macro _category_element(category) %}
-    <div style="background: {{ category.color + "30" }}; border-bottom-color: {{ category.color + "50" }}" class="category-item drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b">
-        <p class="text-slate-800 dark:text-slate-200 leading-none">{{ category.name }} </p>
+    <div style="background: {{ category.color + "30" }}; border-bottom-color: {{ category.color + "50" }}" class="category-item drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b gap-4">
+        <p class="text-slate-700 dark:text-slate-300 leading-none overflow-ellipsis overflow-hidden">{{ category.name }} </p>
         <div class="flex gap-1">
             <a href="{{ url_for("categories.edit", category_uuid=category.uuid) }}" class="edit-category-button" data-category-uuid="{{ category.uuid }}">
-                {{ pencil() }}
+                {{ pencil("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
             </a>
             <div class="delete-category-button cursor-pointer" data-category-uuid="{{ category.uuid }}">
-                {{ trash() }}
+                {{ trash("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
             </div>
         </div>
     </div>
