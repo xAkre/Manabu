@@ -1,0 +1,15 @@
+{% macro form_field(field, icon, placeholder) %}
+    <div class="flex flex-col w-full md:gap-1">
+        {{ field.label(class="text-slate-500 dark:text-slate-400 text-sm font-extralight") }}
+        <div class="flex py-1.5 px-1 gap-2 items-center border-b border-b-slate-400 dark:border-b-slate-500">
+            {{ icon(class="text-slate-500 dark:text-slate-300 h-6 font-extralight md:h-8") }}
+            {{
+                field(
+                    class="outline-none bg-transparent w-full h-full text-slate-600 dark:text-slate-300 text-sm",
+                    value=request.form[field.name],
+                    placeholder=placeholder
+                )
+            }}
+        </div>
+    </div>
+{% endmacro %}
