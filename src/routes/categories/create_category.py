@@ -1,6 +1,13 @@
 from typing import Any
 from http import HTTPStatus
-from flask import request, flash, session as f_session
+from flask import (
+    request,
+    flash,
+    session as f_session,
+    render_template,
+    redirect,
+    url_for,
+)
 from database import session as d_session
 from database.orm import select, and_
 from database.exc import DatabaseError
@@ -15,7 +22,11 @@ def create_category() -> Any:
     Handle creating categories
     """
     if request.method == "GET":
-        return "Create category"
+        return render_template(
+            "pages/categories/create_category.jinja",
+            user=f_session.get("user"),
+            form=AddCategoryForm(),
+        )
 
     # Validate user input
     form = AddCategoryForm(request.form)
@@ -24,7 +35,14 @@ def create_category() -> Any:
         for field, errors in form.errors.items():
             for error in errors:
                 flash(error, "error")
-        return "Invalid Input", HTTPStatus.BAD_REQUEST
+        return (
+            render_template(
+                "pages/categories/create_category.jinja",
+                user=f_session.get("user"),
+                form=form,
+            ),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Check if the category already exists
     try:
@@ -39,13 +57,24 @@ def create_category() -> Any:
     except DatabaseError:
         flash("There was an error while trying to create the category", "error")
         return (
-            "There was an error while trying to create the category",
+            render_template(
+                "pages/categories/create_category.jinja",
+                user=f_session.get("user"),
+                form=form,
+            ),
             HTTPStatus.INTERNAL_SERVER_ERROR,
         )
 
     if existing_category is not None:
         flash("That category already exists", "error")
-        return "That category already exists", HTTPStatus.BAD_REQUEST
+        return (
+            render_template(
+                "pages/categories/create_category.jinja",
+                user=f_session.get("user"),
+                form=form,
+            ),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Add the category
     try:
@@ -56,10 +85,14 @@ def create_category() -> Any:
         d_session.commit()
 
         flash("Successfully created category", "success")
-        return "Successfully created category", HTTPStatus.CREATED
+        return redirect(url_for("categories.show"))
     except DatabaseError:
         flash("There was an error while trying to create the category", "error")
         return (
-            "There was an error while trying to create the category",
+            render_template(
+                "pages/categories/create_category.jinja",
+                user=f_session.get("user"),
+                form=form,
+            ),
             HTTPStatus.INTERNAL_SERVER_ERROR,
         )

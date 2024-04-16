@@ -50,8 +50,11 @@ def test_can_add_category(flask_app) -> None:
     with flask_app.test_request_context():
         register_and_login(test_client, flask_app=flask_app)
         data = form_data({"name": "work", "color": "#FFFFFF"})
-        response = test_client.post(url_for("categories.create"), data=data)
-        assert response.status_code == HTTPStatus.CREATED
+        response = test_client.post(
+            url_for("categories.create"), data=data, follow_redirects=True
+        )
+        assert response.status_code == HTTPStatus.OK
+        assert response.request.path == url_for("categories.show")
 
         user = d_session.execute(
             select(User).where(User.email == "email@email.com")
