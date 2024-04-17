@@ -2,7 +2,7 @@ from forms.categories import AddCategoryForm
 from tests.utils import form_data
 
 
-def test_validates_proper_input():
+def test_validates_proper_input() -> None:
     """
     Make sure that the form allows proper input
     """
@@ -12,7 +12,7 @@ def test_validates_proper_input():
     assert form.validate()
 
 
-def test_does_not_validate_too_short_name():
+def test_does_not_validate_too_short_name() -> None:
     """
     Make sure that the form does not allow a name shorter than 4 characters
     """
@@ -22,7 +22,7 @@ def test_does_not_validate_too_short_name():
     assert not form.validate()
 
 
-def test_does_not_validate_too_long_name():
+def test_does_not_validate_too_long_name() -> None:
     """
     Make sure that the form does not allow a name longer than 64 characters
     """
@@ -32,7 +32,7 @@ def test_does_not_validate_too_long_name():
     assert not form.validate()
 
 
-def test_does_not_validate_invalid_hex_color():
+def test_does_not_validate_invalid_hex_color() -> None:
     """
     Make sure that the form does not allow an invalid hex
     """
