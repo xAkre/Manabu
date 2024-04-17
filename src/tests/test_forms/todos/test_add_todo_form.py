@@ -21,11 +21,9 @@ def test_validates_no_category() -> None:
     """
     Make sure that the form allows a record without a category
     """
-    data = form_data(
-        {"title": "Go to school", "date": "2024-04-17", "category": "None"}
-    )
+    data = form_data({"title": "Go to school", "date": "2024-04-17", "category": ""})
     form = AddTodoForm(formdata=data)
-    form.category.choices = [("None", "")]
+    form.category.choices = [("", None)]
 
     assert form.validate()
 
@@ -34,10 +32,8 @@ def test_does_not_validate_invalid_date():
     """
     Make sure that the form not validate an invalid date
     """
-    data = form_data(
-        {"title": "Go to school", "date": "2024-04-32", "category": "None"}
-    )
+    data = form_data({"title": "Go to school", "date": "2024-04-32", "category": ""})
     form = AddTodoForm(formdata=data)
-    form.category.choices = [("None", "")]
+    form.category.choices = [("", None)]
 
     assert not form.validate()
