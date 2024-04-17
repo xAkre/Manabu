@@ -24,3 +24,8 @@ complete.
 - [Pytest](https://www.pytest.org/) - Testing framework
 - [TailwindCSS](https://tailwindcss.com/) - CSS Framework
 - [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) - Templating engine
+
+## Currently working on
+
+- Implementing backend for operations on todos
+- Implementing frontend for managing todos
