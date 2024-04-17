@@ -24,8 +24,3 @@ complete.
 - [Pytest](https://www.pytest.org/) - Testing framework
 - [TailwindCSS](https://tailwindcss.com/) - CSS Framework
 - [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) - Templating engine
-
-## Currently Working On
-
-- Implementing frontend for managing categories
-
