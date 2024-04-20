@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from ..orm import Mapped, ForeignKey, mapped_column, relationship
+from datetime import datetime
+from ..orm import Mapped, ForeignKey, mapped_column, relationship, DateTime
 from .base import Base
 
 if TYPE_CHECKING:
@@ -16,6 +17,7 @@ class Todo(Base):
     __tablename__ = "todo"
 
     title: Mapped[str] = mapped_column(nullable=False)
+    due_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     completed: Mapped[bool] = mapped_column(nullable=False, default=False)
     user_uuid: Mapped[str] = mapped_column(ForeignKey("user.uuid"), nullable=False)
     category_uuid: Mapped[str] = mapped_column(
