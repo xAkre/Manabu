@@ -21,7 +21,7 @@ class Todo(Base):
     completed: Mapped[bool] = mapped_column(nullable=False, default=False)
     user_uuid: Mapped[str] = mapped_column(ForeignKey("user.uuid"), nullable=False)
     category_uuid: Mapped[str] = mapped_column(
-        ForeignKey("category.uuid"), nullable=True
+        ForeignKey("category.uuid", ondelete="SET NULL"), nullable=True
     )
     """
     Todos do not have to have a category
