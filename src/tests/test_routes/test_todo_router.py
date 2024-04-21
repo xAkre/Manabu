@@ -258,3 +258,32 @@ def test_can_edit_todo(flask_app) -> None:
         assert todo.title == edited_todo_data.get("title")
         assert str(todo.due_date) == edited_todo_data.get("date")
         assert todo.category == category
+
+
+def test_url_for_show_todos_page(flask_app) -> None:
+    """
+    Make sure that url for todos.show returns "/todos/"
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(todos_router)
+
+    with flask_app.test_request_context():
+        assert url_for("todos.show") == "/todos/"
+
+
+@pytest.mark.usefixtures("set_temporary_database")
+def test_can_get_show_todos_page(flask_app) -> None:
+    """
+    Make sure that the show categories page can be fetched
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(todos_router)
+    test_client = flask_app.test_client()
+
+    with flask_app.test_request_context():
+        register_and_login(test_client, flask_app=flask_app)
+        response = test_client.get(url_for("todos.show"))
+
+        assert response.status_code == HTTPStatus.OK
