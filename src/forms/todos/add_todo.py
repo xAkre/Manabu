@@ -12,7 +12,7 @@ class AddTodoForm(Form):
         validators=[
             validators.input_required(message="Title is required"),
             validators.length(
-                min=4, max=64, message="Todo title must 4 - 128 characters"
+                min=4, max=128, message="Todo title must 4 - 128 characters"
             ),
         ],
     )
