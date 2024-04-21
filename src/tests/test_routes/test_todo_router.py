@@ -1,7 +1,7 @@
 import pytest
 from http import HTTPStatus
 from uuid import uuid4
-from flask import url_for, session as f_session
+from flask import url_for, session as f_session, get_flashed_messages
 from database import session as d_session
 from database.orm import select
 from database.models import Category, Todo
@@ -196,3 +196,65 @@ def test_can_delete_todo(flask_app) -> None:
         response = test_client.delete(url_for("todos.delete", todo_uuid=todo.uuid))
         assert response.status_code == HTTPStatus.OK
         assert len(f_session.get("user").todos) == 0
+
+
+def test_url_for_edit_todo_route(flask_app) -> None:
+    """
+    Make sure that url for todos.edit returns "/todos/<todo_uuid>/"
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(todos_router)
+    uuid = str(uuid4())
+
+    with flask_app.test_request_context():
+        assert url_for("todos.edit", todo_uuid=uuid) == f"/todos/{uuid}/"
+
+
+@pytest.mark.usefixtures("set_temporary_database")
+def test_can_edit_todo(flask_app) -> None:
+    """
+    Make sure that todos can be successfully edited
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(todos_router)
+    flask_app.register_blueprint(categories_router)
+    test_client = flask_app.test_client()
+
+    with flask_app.test_request_context():
+        register_and_login(test_client, flask_app=flask_app)
+        todo_data = form_data(
+            {"title": "Go to work", "date": "2024-01-01", "category": ""}
+        )
+        test_client.post(url_for("todos.add"), data=todo_data)
+
+        todo = d_session.execute(
+            select(Todo).where(
+                Todo.title == todo_data.get("title"),
+            )
+        ).scalar()
+
+        new_category_data = form_data({"name": "School", "color": "#FFFFFF"})
+        test_client.post(url_for("categories.create"), data=new_category_data)
+        category = d_session.execute(
+            select(Category).where(Category.name == new_category_data.get("name"))
+        ).scalar()
+
+        edited_todo_data = form_data(
+            {"title": "Go to school", "date": "2024-01-02", "category": category.uuid}
+        )
+        test_client.post(
+            url_for("todos.edit", todo_uuid=todo.uuid),
+            data=edited_todo_data,
+        )
+
+        todo = d_session.execute(
+            select(Todo).where(
+                Todo.title == edited_todo_data.get("title"),
+            )
+        ).scalar()
+
+        assert todo.title == edited_todo_data.get("title")
+        assert str(todo.due_date) == edited_todo_data.get("date")
+        assert todo.category == category
