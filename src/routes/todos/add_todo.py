@@ -36,6 +36,7 @@ def add_todo() -> Any:
                 and_(
                     Todo.title == form.title.data,
                     Todo.due_date == form.date.data,
+                    Todo.user == f_session.get("user"),
                 )
             )
         ).scalar()
