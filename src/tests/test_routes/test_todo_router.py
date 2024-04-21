@@ -4,7 +4,7 @@ from uuid import uuid4
 from flask import url_for, session as f_session
 from database import session as d_session
 from database.orm import select
-from database.models import Category
+from database.models import Category, Todo
 from routes import todos_router, categories_router
 from tests.utils import register_and_login, form_data
 
@@ -150,12 +150,49 @@ def test_cant_add_todo_with_invalid_date(flask_app) -> None:
     with flask_app.test_request_context():
         register_and_login(test_client, flask_app=flask_app)
         todo_data = form_data(
-            {
-                "title": "Do some freelancing work",
-                "date": "2024-12-32",
-                "category": ""
-            }
+            {"title": "Do some freelancing work", "date": "2024-12-32", "category": ""}
         )
         response = test_client.post(url_for("todos.add"), data=todo_data)
 
         assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_url_for_delete_todo_route(flask_app) -> None:
+    """
+    Make sure that url for todos.delete returns "/todos/<todo_uuid>/"
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(todos_router)
+    uuid = str(uuid4())
+
+    with flask_app.test_request_context():
+        assert url_for("todos.delete", todo_uuid=uuid) == f"/todos/{uuid}/"
+
+
+@pytest.mark.usefixtures("set_temporary_database")
+def test_can_delete_todo(flask_app) -> None:
+    """
+    Make sure that the delete todo route can successfully delete a todo
+
+    :param flask_app: A flask application
+    """
+    flask_app.register_blueprint(todos_router)
+    test_client = flask_app.test_client()
+
+    with flask_app.test_request_context(), test_client:
+        register_and_login(test_client, flask_app=flask_app)
+        todo_data = form_data(
+            {"title": "Go to work", "date": "2025-01-01", "category": ""}
+        )
+        test_client.post(url_for("todos.add"), data=todo_data)
+
+        todo = d_session.execute(
+            select(Todo).where(
+                Todo.title == todo_data.get("title"),
+            )
+        ).scalar()
+
+        response = test_client.delete(url_for("todos.delete", todo_uuid=todo.uuid))
+        assert response.status_code == HTTPStatus.OK
+        assert len(f_session.get("user").todos) == 0
