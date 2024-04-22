@@ -3,7 +3,7 @@ from flask import Flask, session as f_session
 from flask_session import Session as ServerSideSession
 from database import session as d_session, set_database
 from database.models import User
-from routes import general_router, auth_router, categories_router
+from routes import general_router, auth_router, categories_router, todos_router
 from config import Config
 
 app = Flask(
@@ -20,6 +20,7 @@ ServerSideSession(app)
 app.register_blueprint(general_router)
 app.register_blueprint(auth_router)
 app.register_blueprint(categories_router)
+app.register_blueprint(todos_router)
 
 set_database(Config.DATABASE_URL)
 
