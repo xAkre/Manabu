@@ -1,0 +1,16 @@
+{% from 'components/forms/form.jinja' import form_field %}
+{% from 'components/icons.jinja' import identification %}
+
+
+{% macro add_todo_form(form) %}
+     <div class="w-full max-w-screen-sm">
+        <form action="{{ url_for("todos.add") }}" method="post">
+            <div class="flex flex-col w-full gap-5">
+                <div class="flex flex-col gap-3 w-full">
+                    {{ form_field(form.title, identification, "Todo Title") }}
+                </div>
+                <button type="submit" class="w-full rounded-lg bg-gradient-to-r from-indigo-800 to-indigo-500 py-1.5 text-sm font-extralight text-slate-100 transition-all duration-300 ease-in-out">Add Todo</button>
+            </div>
+        </form>
+    </div>
+{% endmacro %}

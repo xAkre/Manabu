@@ -1,7 +1,6 @@
 from typing import Any
-from datetime import date
 from http import HTTPStatus
-from flask import session as f_session, request, flash
+from flask import session as f_session, request, flash, render_template
 from database import session as d_session
 from database.orm import select, and_
 from database.models import Todo, Category
@@ -16,7 +15,14 @@ def add_todo() -> Any:
     Handle adding todos
     """
     if request.method == "GET":
-        return "Add Todo Page"
+        form = AddTodoForm()
+        form.category.choices = [("", None)]
+        for category in f_session.get("user").categories:
+            form.category.choices.append((category.uuid, category))
+
+        return render_template(
+            "pages/todos/add_todo.jinja", user=f_session.get("user"), form=form
+        )
 
     form = AddTodoForm(request.form)
     form.category.choices = [("", None)]
@@ -27,7 +33,12 @@ def add_todo() -> Any:
         for field, errors in form.errors.items():
             for error in errors:
                 flash(error, "error")
-        return "Add Todo Page", HTTPStatus.BAD_REQUEST
+        return (
+            render_template(
+                "pages/todos/add_todo.jinja", user=f_session.get("user"), form=form
+            ),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     # Check if the todo already exists
     try:
@@ -43,13 +54,20 @@ def add_todo() -> Any:
     except DatabaseError:
         flash("There was an error while trying to create the todo", "error")
         return (
-            "Add Todo Page",
+            render_template(
+                "pages/todos/add_todo.jinja", user=f_session.get("user"), form=form
+            ),
             HTTPStatus.INTERNAL_SERVER_ERROR,
         )
 
     if existing_todo is not None:
         flash("That todo already exists", "error")
-        return "Add Todo Page", HTTPStatus.BAD_REQUEST
+        return (
+            render_template(
+                "pages/todos/add_todo.jinja", user=f_session.get("user"), form=form
+            ),
+            HTTPStatus.BAD_REQUEST,
+        )
 
     category = d_session.execute(
         select(Category).where(Category.uuid == form.category.data)
@@ -70,6 +88,8 @@ def add_todo() -> Any:
     except DatabaseError:
         flash("There was an error while trying to create the todo", "error")
         return (
-            "Add Todo Page",
+            render_template(
+                "pages/todos/add_todo.jinja", user=f_session.get("user"), form=form
+            ),
             HTTPStatus.INTERNAL_SERVER_ERROR,
         )
