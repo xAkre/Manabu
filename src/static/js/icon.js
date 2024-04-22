@@ -452,6 +452,26 @@ class PaintBrush extends Icon {
         '</svg>';
 }
 
+/**
+ * Represents a clock icon
+ */
+class Clock extends Icon {
+    static svgString =
+        '<svg\n' +
+        '    xmlns="http://www.w3.org/2000/svg"\n' +
+        '    fill="none"\n' +
+        '    viewBox="0 0 24 24"\n' +
+        '    stroke-width="1.5"\n' +
+        '    stroke="currentColor"\n' +
+        '>\n' +
+        '    <path\n' +
+        '        stroke-linecap="round"\n' +
+        '        stroke-linejoin="round"\n' +
+        '        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"\n' +
+        '    />\n' +
+        '</svg>';
+}
+
 export {
     Identification,
     Lock,
@@ -474,4 +494,5 @@ export {
     Pencil,
     Trash,
     PaintBrush,
+    Clock,
 };
