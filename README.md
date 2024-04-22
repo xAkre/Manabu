@@ -27,5 +27,4 @@ complete.
 
 ## Currently working on
 
-- Implementing backend for operations on todos
 - Implementing frontend for managing todos
