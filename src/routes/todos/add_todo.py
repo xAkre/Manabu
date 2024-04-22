@@ -16,9 +16,9 @@ def add_todo() -> Any:
     """
     if request.method == "GET":
         form = AddTodoForm()
-        form.category.choices = [("", None)]
+        form.category.choices = [("", "None")]
         for category in f_session.get("user").categories:
-            form.category.choices.append((category.uuid, category))
+            form.category.choices.append((category.uuid, category.name))
 
         return render_template(
             "pages/todos/add_todo.jinja", user=f_session.get("user"), form=form
@@ -27,7 +27,7 @@ def add_todo() -> Any:
     form = AddTodoForm(request.form)
     form.category.choices = [("", None)]
     for category in f_session.get("user").categories:
-        form.category.choices.append((category.uuid, category))
+        form.category.choices.append((category.uuid, category.name))
 
     if not form.validate():
         for field, errors in form.errors.items():
