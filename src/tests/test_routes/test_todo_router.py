@@ -29,6 +29,7 @@ def test_can_get_add_todo_page(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(todos_router)
+    flask_app.register_blueprint(categories_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():
@@ -99,6 +100,7 @@ def test_cant_add_todo_that_already_exists(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(todos_router)
+    flask_app.register_blueprint(categories_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():
@@ -121,6 +123,7 @@ def test_cant_add_todo_that_doesnt_belong_to_user(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(todos_router)
+    flask_app.register_blueprint(categories_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():
@@ -145,6 +148,7 @@ def test_cant_add_todo_with_invalid_date(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(todos_router)
+    flask_app.register_blueprint(categories_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():

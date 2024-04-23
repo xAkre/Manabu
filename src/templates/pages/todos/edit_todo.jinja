@@ -1,0 +1,15 @@
+{% extends "layout/base.jinja" %}
+{% from 'components/forms/todo.jinja' import edit_todo_form %}
+
+
+{% set with_nav = True %}
+{% set with_sidebar = True %}
+{% set logo_text = "todos" %}
+{% block title %}Edit Todo{% endblock %}
+
+{% block body %}
+    <div class="lg:pl-12 lg:pt-7 w-full max-w-screen-sm flex flex-col px-7 py-4 gap-6">
+        <p class="text-2xl text-slate-800 dark:text-slate-200 font-extralight">Edit Todo</p>
+        {{ edit_todo_form(form=form, todo=todo) }}
+    </div>
+{% endblock %}
