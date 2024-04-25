@@ -1,6 +1,13 @@
 from typing import Any
 from http import HTTPStatus
-from flask import session as f_session, request, flash, render_template
+from flask import (
+    session as f_session,
+    request,
+    flash,
+    render_template,
+    redirect,
+    url_for,
+)
 from database import session as d_session
 from database.orm import select, and_
 from database.models import Todo, Category
@@ -84,7 +91,7 @@ def add_todo() -> Any:
         d_session.add(new_todo)
         d_session.commit()
         flash("Successfully added todo", "success")
-        return "Todo List"
+        return redirect(url_for("todos.show"))
     except DatabaseError:
         flash("There was an error while trying to create the todo", "error")
         return (

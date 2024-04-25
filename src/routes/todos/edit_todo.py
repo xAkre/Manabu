@@ -107,7 +107,7 @@ def edit_todo(todo_uuid: str) -> Any:
         todo.due_date = form.date.data
         d_session.commit()
         flash("Successfully edited todo", "success")
-        return "Todo List"
+        return redirect(url_for("todos.show"))
     except DatabaseError:
         flash("There was an error while trying to edit the todo", "error")
         return (

@@ -1,0 +1,58 @@
+{% extends "layout/base.jinja" %}
+{% from 'components/forms/todo.jinja' import edit_todo_form %}
+{% from 'components/icons.jinja' import pencil, trash, plus %}
+
+
+{% set with_nav = True %}
+{% set with_sidebar = True %}
+{% set logo_text = "todos" %}
+{% block title %}Your Todos{% endblock %}
+
+
+{% block body %}
+    <div class="lg:pl-12 lg:pt-7 w-full max-w-screen-sm flex flex-col px-7 py-4 gap-6">
+        <div class="flex justify-between items-center w-full">
+            <p class="text-2xl text-slate-800 dark:text-slate-200 font-extralight">Your Todos</p>
+            <a href="{{ url_for("todos.add") }}" class="">{{ plus(class="size-8 text-slate-800 dark:text-slate-200 stroke-1") }}</a>
+        </div>
+        <div class="flex flex-col gap-2">
+            {% for todo in sorted_todos %}
+                <div
+                    class="todo-item drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b gap-4"
+                    {% if todo.category %}
+                        style="background: {{ todo.category.color + "30" }}; border-bottom-color: {{ todo.category.color + "" }}"
+                    {% else %}
+                        style="background: #64748b30; border-bottom-color: #64748b50"
+                    {% endif %}
+                >
+                    <p class="text-slate-700 dark:text-slate-300 leading-none overflow-ellipsis overflow-hidden">{{ todo.title }} </p>
+                    <div class="flex gap-1">
+                        <a href="{{ url_for("todos.edit", todo_uuid=todo.uuid) }}" class="edit-todo-button" data-todo-uuid="{{ todo.uuid }}">
+                            {{ pencil("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
+                        </a>
+                        <div class="delete-todo-button cursor-pointer" data-todo-uuid="{{ todo.uuid }}">
+                            {{ trash("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+         <script type="module">
+            import { deleteTodo } from '/static/js/api/todo.js';
+            import { createPopup, appendPopup } from '/static/js/popup.js';
+
+            const deleteTodoButtons = document.querySelectorAll('.delete-todo-button');
+            for (const deleteTodoButton of deleteTodoButtons) {
+                deleteTodoButton.addEventListener('click', async (e) => {
+                    const deleteWasSuccessful = await deleteTodo(e.currentTarget.dataset.todoUuid);
+                    if (deleteWasSuccessful) {
+                        deleteTodoButton.closest('.todo-item').remove();
+                        appendPopup(createPopup("success", "Successfully deleted todo"));
+                    } else {
+                        appendPopup(createPopup("error", "There was an error while trying to delete that todo"));
+                    }
+                })
+            }
+        </script>
+    </div>
+{% endblock %}

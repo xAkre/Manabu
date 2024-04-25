@@ -14,10 +14,10 @@
                     <div class="flex flex-col items-center">
                         {{ _sidebar_menu_element(home, url_for("general.dashboard"), "Dashboard") }}
                         {{ _sidebar_menu_element(tag, url_for("categories.show"), "Categories") }}
-                        {{ _sidebar_menu_element(briefcase, "", "Todos") }}
+                        {{ _sidebar_menu_element(briefcase, url_for("todos.show"), "Todos") }}
                         <span class="w-[90%] h-[1px] bg-slate-600 my-2"></span>
                         {{ _sidebar_menu_element(plus, url_for("categories.create"), "Add Category") }}
-                        {{ _sidebar_menu_element(squares_plus, "", "Add Todo") }}
+                        {{ _sidebar_menu_element(squares_plus, url_for("todos.add"), "Add Todo") }}
                     </div>
                 </div>
                 <div class="flex flex-col w-full gap-1 pb-2">
