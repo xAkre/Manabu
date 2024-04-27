@@ -89,6 +89,25 @@ def edit_todo(todo_uuid: str) -> Any:
         )
 
     if existing_todo is not None:
+        print(request.form, form.completed.data, existing_todo.completed)
+        if not form.completed.data == existing_todo.completed:
+            try:
+                existing_todo.completed = form.completed.data
+                d_session.commit()
+                flash("Successfully edited todo", "success")
+                return redirect(url_for("todos.show"))
+            except DatabaseError:
+                flash("There was an error while trying to edit the todo", "error")
+                return (
+                    render_template(
+                        "pages/todos/edit_todo.jinja",
+                        user=f_session.get("user"),
+                        todo=todo,
+                        form=form,
+                    ),
+                    HTTPStatus.INTERNAL_SERVER_ERROR,
+                )
+
         flash("That todo already exists", "error")
         return (
             render_template(
@@ -105,6 +124,7 @@ def edit_todo(todo_uuid: str) -> Any:
         todo.category_uuid = form.category.data
         todo.title = form.title.data
         todo.due_date = form.date.data
+        todo.completed = form.completed.data
         d_session.commit()
         flash("Successfully edited todo", "success")
         return redirect(url_for("todos.show"))

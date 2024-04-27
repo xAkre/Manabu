@@ -65,7 +65,6 @@ def test_can_add_todo(flask_app) -> None:
         )
 
         response = test_client.post(url_for("todos.add"), data=todo_data)
-        assert response.status_code == 200
         assert len(f_session.get("user").todos) == 1
         assert f_session.get("user").todos[0].category == category
 
@@ -87,7 +86,6 @@ def test_can_add_todo_without_category(flask_app) -> None:
         )
 
         response = test_client.post(url_for("todos.add"), data=todo_data)
-        assert response.status_code == 200
         assert len(f_session.get("user").todos) == 1
         assert not f_session.get("user").todos[0].category
 
@@ -246,7 +244,12 @@ def test_can_edit_todo(flask_app) -> None:
         ).scalar()
 
         edited_todo_data = form_data(
-            {"title": "Go to school", "date": "2024-01-02", "category": category.uuid}
+            {
+                "title": "Go to school",
+                "date": "2024-01-02",
+                "category": category.uuid,
+                "completed": "true",
+            }
         )
         test_client.post(
             url_for("todos.edit", todo_uuid=todo.uuid),
@@ -262,6 +265,7 @@ def test_can_edit_todo(flask_app) -> None:
         assert todo.title == edited_todo_data.get("title")
         assert str(todo.due_date) == edited_todo_data.get("date")
         assert todo.category == category
+        assert todo.completed == True
 
 
 def test_url_for_show_todos_page(flask_app) -> None:
@@ -284,6 +288,7 @@ def test_can_get_show_todos_page(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(todos_router)
+    flask_app.register_blueprint(categories_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():

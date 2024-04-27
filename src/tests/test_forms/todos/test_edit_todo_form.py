@@ -9,7 +9,12 @@ def test_validates_proper_input() -> None:
     """
     category_uuid = uuid4()
     data = form_data(
-        {"title": "Go To Work", "date": "2024-12-30", "category": category_uuid}
+        {
+            "title": "Go To Work",
+            "date": "2024-12-30",
+            "category": category_uuid,
+            "completed": "false",
+        }
     )
     form = EditTodoForm(formdata=data)
     form.category.choices = [(category_uuid, "School")]

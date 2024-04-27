@@ -5,7 +5,7 @@ from flask import url_for
 from database import session as d_session
 from database.orm import select
 from database.models import User, Category
-from routes import categories_router
+from routes import categories_router, todos_router
 from tests.utils import form_data, register_and_login
 
 
@@ -29,6 +29,7 @@ def test_can_get_add_category_page(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(categories_router)
+    flask_app.register_blueprint(todos_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():
@@ -45,6 +46,7 @@ def test_can_add_category(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(categories_router)
+    flask_app.register_blueprint(todos_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():
@@ -70,6 +72,7 @@ def test_cant_add_category_with_invalid_color(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(categories_router)
+    flask_app.register_blueprint(todos_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():
@@ -102,6 +105,7 @@ def test_can_show_categories(flask_app) -> None:
     :param flask_app: A flask application
     """
     flask_app.register_blueprint(categories_router)
+    flask_app.register_blueprint(todos_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context():

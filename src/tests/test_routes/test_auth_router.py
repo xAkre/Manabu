@@ -4,7 +4,7 @@ from flask import url_for, session as f_session
 from database import session as d_session
 from database.orm import select
 from database.models import User
-from routes import auth_router, general_router, categories_router
+from routes import auth_router, general_router, categories_router, todos_router
 
 
 def test_url_for_register_page(flask_app) -> None:
@@ -160,6 +160,7 @@ def test_can_log_in_with_username(flask_app) -> None:
     flask_app.register_blueprint(general_router)
     flask_app.register_blueprint(auth_router)
     flask_app.register_blueprint(categories_router)
+    flask_app.register_blueprint(todos_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context(), test_client:
@@ -196,6 +197,7 @@ def test_can_log_in_with_email(flask_app) -> None:
     flask_app.register_blueprint(general_router)
     flask_app.register_blueprint(auth_router)
     flask_app.register_blueprint(categories_router)
+    flask_app.register_blueprint(todos_router)
     test_client = flask_app.test_client()
 
     with flask_app.test_request_context(), test_client:

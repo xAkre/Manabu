@@ -1,5 +1,5 @@
 {% from 'components/forms/form.jinja' import form_field %}
-{% from 'components/icons.jinja' import identification, tag, clock %}
+{% from 'components/icons.jinja' import identification, tag, clock, tick %}
 
 
 {% macro add_todo_form(form) %}
@@ -128,6 +128,26 @@
             <div class="flex flex-col w-full gap-5">
                 <div class="flex flex-col gap-3 w-full">
                     {{ form_field(form.title, identification, "Todo Title", value=form.title.data or todo.title) }}
+                    <div class="flex flex-col w-full md:gap-1">
+                        {{ form.completed.label(class="text-slate-500 dark:text-slate-400 text-sm font-extralight") }}
+                        <div class="flex py-1.5 px-1 gap-2 items-center border-b border-b-slate-400 dark:border-b-slate-500">
+                            {{ tick(class="text-slate-500 dark:text-slate-300 h-5 font-extralight md:h-7") }}
+                            {% if todo.completed or form.completed.data == "y" %}
+                                {{
+                                    form.completed(
+                                        class="outline-none bg-transparent h-full text-slate-600 dark:text-slate-300 text-sm",
+                                        checked=""
+                                    )
+                                }}
+                            {% else %}
+                                {{
+                                    form.completed(
+                                        class="outline-none bg-transparent h-full text-slate-600 dark:text-slate-300 text-sm"
+                                    )
+                                }}
+                            {% endif %}
+                        </div>
+                    </div>
                     <div class="flex flex-col w-full md:gap-1">
                         {{ form.category.label(class="text-slate-500 dark:text-slate-400 text-sm font-extralight") }}
                         <div class="flex py-1.5 px-1 gap-2 items-center border-b border-b-slate-400 dark:border-b-slate-500">
