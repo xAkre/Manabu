@@ -89,7 +89,6 @@ def edit_todo(todo_uuid: str) -> Any:
         )
 
     if existing_todo is not None:
-        print(request.form, form.completed.data, existing_todo.completed)
         if not form.completed.data == existing_todo.completed:
             try:
                 existing_todo.completed = form.completed.data
