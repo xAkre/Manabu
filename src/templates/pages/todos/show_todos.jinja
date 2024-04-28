@@ -1,6 +1,6 @@
 {% extends "layout/base.jinja" %}
 {% from 'components/forms/todo.jinja' import edit_todo_form %}
-{% from 'components/icons.jinja' import pencil, trash, plus %}
+{% from 'components/icons.jinja' import pencil, trash, plus, tick %}
 
 
 {% set with_nav = True %}
@@ -15,24 +15,37 @@
             <p class="text-2xl text-slate-800 dark:text-slate-200 font-extralight">Your Todos</p>
             <a href="{{ url_for("todos.add") }}" class="">{{ plus(class="size-8 text-slate-800 dark:text-slate-200 stroke-1") }}</a>
         </div>
-        <div class="flex flex-col gap-2">
-            {% for todo in sorted_todos %}
-                <div
-                    class="todo-item drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b gap-4"
-                    {% if todo.category %}
-                        style="background: {{ todo.category.color + "30" }}; border-bottom-color: {{ todo.category.color + "" }}"
-                    {% else %}
-                        style="background: #64748b30; border-bottom-color: #64748b50"
-                    {% endif %}
-                >
-                    <p class="text-slate-700 dark:text-slate-300 leading-none overflow-ellipsis overflow-hidden">{{ todo.title }} </p>
-                    <div class="flex gap-1">
-                        <a href="{{ url_for("todos.edit", todo_uuid=todo.uuid) }}" class="edit-todo-button" data-todo-uuid="{{ todo.uuid }}">
-                            {{ pencil("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
-                        </a>
-                        <div class="delete-todo-button cursor-pointer" data-todo-uuid="{{ todo.uuid }}">
-                            {{ trash("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
-                        </div>
+        <div class="flex flex-col gap-5">
+            {% for day in sorted_todos %}
+                <div class="flex flex-col gap-1">
+                    <p class="text-slate-500 dark:text-slate-400 text-sm font-extralight underline">
+                        {{ day[0].due_date }}
+                    </p>
+                    <div class="flex flex-col gap-2">
+                        {% for todo in day %}
+                            <div
+                                class="todo-item drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b gap-4"
+                                {% if todo.category %}
+                                    style="background: {{ todo.category.color + "30" }}; border-bottom-color: {{ todo.category.color + "80" }}"
+                                {% else %}
+                                    style="background: #64748b30; border-bottom-color: #64748b50"
+                                {% endif %}
+                            >   <div class="flex items-center gap-2">
+                                    {% if todo.completed %}
+                                        {{ tick(class="size-6 text-slate-700 dark:text-slate-300") }}
+                                    {% endif %}
+                                    <p class="text-slate-700 dark:text-slate-300 leading-none overflow-ellipsis overflow-hidden">{{ todo.title }} </p>
+                                </div>
+                                <div class="flex gap-1">
+                                    <a href="{{ url_for("todos.edit", todo_uuid=todo.uuid) }}" class="edit-todo-button" data-todo-uuid="{{ todo.uuid }}">
+                                        {{ pencil("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
+                                    </a>
+                                    <div class="delete-todo-button cursor-pointer" data-todo-uuid="{{ todo.uuid }}">
+                                        {{ trash("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             {% endfor %}
