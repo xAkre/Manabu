@@ -11,7 +11,7 @@ from flask import (
 from database import session as d_session
 from database.orm import select, and_
 from database.exc import DatabaseError
-from database.models import Todo
+from database.models import Todo, Category
 from forms.todos import EditTodoForm
 from middleware import require_login
 
@@ -66,6 +66,15 @@ def edit_todo(todo_uuid: str) -> Any:
         )
 
     # Check if a todo with the same data exists
+
+    existing_category = d_session.execute(
+        select(Category).where(
+            and_(
+                Category.uuid == form.category.data,
+                Category.user == f_session.get("user"),
+            )
+        )
+    ).scalar()
     try:
         existing_todo = d_session.execute(
             select(Todo).where(
@@ -73,6 +82,7 @@ def edit_todo(todo_uuid: str) -> Any:
                     Todo.title == form.title.data,
                     Todo.due_date == form.date.data,
                     Todo.user == f_session.get("user"),
+                    Todo.category == existing_category,
                 )
             )
         ).scalar()
