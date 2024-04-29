@@ -154,7 +154,8 @@
                             {{ tag(class="text-slate-500 dark:text-slate-300 h-5 font-extralight md:h-7") }}
                             {{
                                 form.category(
-                                    class="hidden category-select outline-none !bg-slate-50 dark:!bg-slate-900 grow !h-full !text-slate-600 dark:!text-slate-300 text-sm drop-shadow !border-none !p-3 !z-10"
+                                    class="hidden category-select outline-none !bg-slate-50 dark:!bg-slate-900 grow !h-full !text-slate-600 dark:!text-slate-300 text-sm drop-shadow !border-none !p-3 !z-10",
+                                    value=todo.category.name if todo.category else ""
                                 )
                             }}
                         </div>
@@ -162,6 +163,21 @@
                         <link rel="stylesheet" href="/static/styles/lib/nice-select2.css">
                         <script type="module">
                             NiceSelect.bind(document.querySelector('.category-select'));
+
+                            const categorySelect = document.querySelector('#category');
+                            if (categorySelect.getAttribute('value') !== '') {
+                                const niceSelect = document.querySelector('.nice-select');
+                                niceSelect.querySelector('.current').textContent = categorySelect.getAttribute('value');
+
+                                const list = niceSelect.querySelector('.list');
+                                list.querySelector('.selected').classList.remove('selected');
+
+                                for (const item in list.querySelectorAll('*')) {
+                                    if (item.textContent === categorySelect.getAttribute('value')) {
+                                        item.classList.add('selected');
+                                    }
+                                }
+                            }
                         </script>
                         <style>
                             .nice-select {
