@@ -11,13 +11,13 @@ dependencies = [
     "sqlalchemy",
     "werkzeug",
     "wtforms",
-    "wtforms[email]"
+    "wtforms[email]",
+    "multidict"
 ]
 
 [project.optional-dependencies]
 test = [
-    "pytest",
-    "multidict"
+    "pytest"
 ]
 
 

@@ -1,4 +1,5 @@
 {% extends "layout/base.jinja" %}
+{% from "components/icons.jinja" import tick, x_circle %}
 
 
 {% set with_nav = true %}
@@ -7,5 +8,102 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-    Dashboard
+    <div class="lg:pl-12 lg:pt-7 w-full max-w-screen-sm flex flex-col px-7 py-4 gap-6">
+        <p class="text-2xl text-slate-800 dark:text-slate-200 font-extralight">Dashboard</p>
+        <div class="w-full p-6 flex flex-col bg-slate-800 dark:bg-slate-900 gap-1 rounded-lg">
+            <div class="flex flex-col gap-0.5">
+                {% if todos_today|length == 0 %}
+                    <p class="text-slate-100 font-medium leading-none">You have no tasks today</p>
+                {% else %}
+                    <p class="text-slate-100 font-semibold text-xl leading-none">Tasks completed today</p>
+                    <p class="status-text text-slate-300 font-light text-md">
+                        {{ todos_completed }}
+                        {% if todos_completed == 1 %}
+                            task
+                        {% else %}
+                            tasks
+                        {% endif %}
+                        completed out of
+                        {{ todos_today|length }}
+                    </p>
+                {% endif %}
+            </div>
+            {% if todos_today|length > 0 %}
+                <div class="flex flex-col items-end gap-1.5">
+                    <p class="progress-text text-slate-300 text-sm">Progress {{ todos_progress }}%</p>
+                    <div class="relative progress-bar w-full h-2 rounded-md bg-slate-500 overflow-hidden">
+                        <div class="bar"></div>
+                    </div>
+                </div>
+                <style>
+                    .progress-bar > .bar {
+                        --completed-todos: {{ todos_completed }};
+                        --total-todos: {{ todos_today|length }};
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        background-color: #cbd5e1;
+                        height: 100%;
+                        width: calc((var(--completed-todos) / var(--total-todos)) * 100%);
+                    }
+                </style>
+            {% endif %}
+        </div>
+        {% if todos_today|length > 0 and not todos_today|length == todos_completed %}
+            <div class="flex flex-col gap-2">
+                <p class="text-slate-500 dark:text-slate-400 text-sm font-extralight underline">
+                    Today's todos
+                </p>
+                <div class="flex flex-col gap-2">
+                    {% for todo in todos_today %}
+                        {% if not todo.completed %}
+                            <div
+                                class="todo-item drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b gap-4"
+                                data-todo-uuid="{{ todo.uuid }}"
+                                {% if todo.category %}
+                                    style="background: {{ todo.category.color + "30" }}; border-bottom-color: {{ todo.category.color + "80" }}"
+                                {% else %}
+                                    style="background: #64748b30; border-bottom-color: #64748b50"
+                                {% endif %}
+                            >
+                                <div class="flex items-center gap-2">
+                                    <p class="text-slate-700 dark:text-slate-300 leading-none overflow-ellipsis overflow-hidden">{{ todo.title }} </p>
+                                </div>
+                                <div>
+                                    {{ tick(class="size-6 text-slate-700 dark:text-slate-300 cursor-pointer", class_identifier="mark-as-completed-button") }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <script type="module">
+                        import { createPopup, appendPopup } from '/static/js/popup.js';
+                        import { setCompletedStatus } from '/static/js/api/todo.js';
+
+                        const markAsCompletedButtons = document.querySelectorAll('.mark-as-completed-button');
+
+                        for (const markAsCompletedButton of markAsCompletedButtons) {
+                            markAsCompletedButton.addEventListener('click', async (e) => {
+                                const todoUuid = e.target.closest('.todo-item').dataset.todoUuid;
+
+                                const updateWasSuccessful = await setCompletedStatus(todoUuid, true);
+                                if (updateWasSuccessful) {
+                                    e.target.closest('.todo-item').remove();
+                                    appendPopup(createPopup("success", "Successfully updated todo"));
+                                    const progressBar = document.querySelector('.progress-bar > .bar');
+                                    const completedTodos = +(getComputedStyle(progressBar).getPropertyValue("--completed-todos"));
+                                    const totalTodos = +(getComputedStyle(progressBar).getPropertyValue("--total-todos"));
+                                    console.log(completedTodos, totalTodos)
+                                    progressBar.style.setProperty("--completed-todos", (completedTodos + 1).toString());
+                                    document.querySelector('.status-text').textContent = `${completedTodos + 1} ${completedTodos === 0 ? 'todo' : 'todos'} completed out of ${totalTodos}`;
+                                    document.querySelector('.progress-text').textContent = `Progress ${Math.round((completedTodos + 1) / totalTodos * 100)}%`;
+                                } else {
+                                    appendPopup(createPopup("error", "There was an error while updating the popup"))
+                                }
+                            })
+                        }
+                    </script>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

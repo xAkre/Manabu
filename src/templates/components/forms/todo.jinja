@@ -172,9 +172,11 @@
                                 const list = niceSelect.querySelector('.list');
                                 list.querySelector('.selected').classList.remove('selected');
 
-                                for (const item in list.querySelectorAll('*')) {
+                                for (const item of list.children) {
                                     if (item.textContent === categorySelect.getAttribute('value')) {
-                                        item.classList.add('selected');
+                                        // Could not find another way to do this
+                                        item.click();
+                                        item.click();
                                     }
                                 }
                             }

@@ -31,7 +31,7 @@ def dashboard() -> Any:
     if todos_completed == 0:
         todos_progress = 0
     else:
-        todos_progress = int(len(todos_today) / todos_completed)
+        todos_progress = int(todos_completed / len(todos_today) * 100)
 
     return render_template(
         "pages/general/dashboard.jinja",
