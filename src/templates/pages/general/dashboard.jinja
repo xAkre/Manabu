@@ -92,7 +92,6 @@
                                     const progressBar = document.querySelector('.progress-bar > .bar');
                                     const completedTodos = +(getComputedStyle(progressBar).getPropertyValue("--completed-todos"));
                                     const totalTodos = +(getComputedStyle(progressBar).getPropertyValue("--total-todos"));
-                                    console.log(completedTodos, totalTodos)
                                     progressBar.style.setProperty("--completed-todos", (completedTodos + 1).toString());
                                     document.querySelector('.status-text').textContent = `${completedTodos + 1} ${completedTodos === 0 ? 'todo' : 'todos'} completed out of ${totalTodos}`;
                                     document.querySelector('.progress-text').textContent = `Progress ${Math.round((completedTodos + 1) / totalTodos * 100)}%`;
