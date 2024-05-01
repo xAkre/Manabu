@@ -37,7 +37,7 @@
                                     {% if todo.completed %}
                                         {{ tick(class="size-6 text-slate-700 dark:text-slate-300") }}
                                     {% endif %}
-                                    <p class="text-slate-700 dark:text-slate-300 leading-none overflow-ellipsis overflow-hidden">{{ todo.title }} </p>
+                                    <p class="text-slate-700 dark:text-slate-300 leading-snug overflow-ellipsis overflow-hidden">{{ todo.title }} </p>
                                 </div>
                                 <div class="flex gap-1">
                                     <a href="{{ url_for("todos.edit", todo_uuid=todo.uuid) }}" class="edit-todo-button" data-todo-uuid="{{ todo.uuid }}">

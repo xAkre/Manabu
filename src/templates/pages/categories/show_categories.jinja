@@ -44,7 +44,7 @@
 
 {% macro _category_element(category) %}
     <div style="background: {{ category.color + "30" }}; border-bottom-color: {{ category.color + "50" }}" class="category-item drop-shadow relative flex justify-between items-center w-full max-w-screen-sm px-4 py-3 rounded-md border-b gap-4">
-        <p class="text-slate-700 dark:text-slate-300 leading-none overflow-ellipsis overflow-hidden">{{ category.name }} </p>
+        <p class="text-slate-700 dark:text-slate-300 leading-snug overflow-ellipsis overflow-hidden">{{ category.name }} </p>
         <div class="flex gap-1">
             <a href="{{ url_for("categories.edit", category_uuid=category.uuid) }}" class="edit-category-button" data-category-uuid="{{ category.uuid }}">
                 {{ pencil("size-6 text-slate-700 dark:text-slate-300 stroke-1") }}
