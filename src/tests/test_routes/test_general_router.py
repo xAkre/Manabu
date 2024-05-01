@@ -26,8 +26,11 @@ def test_can_get_landing_page(flask_app) -> None:
     test_client = flask_app.test_client()
 
     with flask_app.app_context(), flask_app.test_request_context():
-        response = test_client.get(url_for("general.landing_page"))
+        response = test_client.get(
+            url_for("general.landing_page"), follow_redirects=True
+        )
         assert response.status_code == HTTPStatus.OK
+        assert response.request.path == url_for("auth.login")
 
 
 def test_url_for_dashboard(flask_app) -> None:

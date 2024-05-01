@@ -346,5 +346,5 @@ def test_can_log_out(flask_app) -> None:
         response = test_client.get(url_for("auth.logout"), follow_redirects=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.request.path == url_for("general.landing_page")
+        assert response.request.path == url_for("auth.login")
         assert f_session.get("user") is None
